@@ -25,7 +25,7 @@ The web-app will be hosted entirely on the Heroku’s servers. Heroku will provi
 
 ## Gantt Chart:
 
-![Gantt Chart](../Documents/Gantt_Chart.png?raw=true)
+![Gantt Chart](../Documents/Gantt_Chart.PNG?raw=true)
 
 ## Entity Relationship Diagram:
 
