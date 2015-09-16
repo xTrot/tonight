@@ -1,7 +1,7 @@
 # Project Plan:
 ## Selected Frameworks:
 
-![System Diagram](/System_Diagram.png)
+![System Diagram](https://github.com/xTrot/tonight/tree/master/Documents/System_Diagram.png)
 
 The web-app will be hosted entirely on the Heroku’s servers. Heroku will provide the PostgreSQL DB and will host the files for the web-app. The server will be developed using the express library for node.js. t will have file management, which will allow the user to request the web pages through URL. After serving the corresponding HTML file, within said file there will be angular.js code to manage dynamic content and the view will be provided by bootstrap.
 
@@ -22,10 +22,10 @@ The web-app will be hosted entirely on the Heroku’s servers. Heroku will provi
 
 ## Gantt Chart:
 
-![Gantt Chart](/Gantt_Chart.png)
+![Gantt Chart](https://github.com/xTrot/tonight/tree/master/Documents/Gantt_Chart.png)
 
 ## Entity Relationship Diagram:
 
-![Entity Relationship Diagram](/ERD.png)
+![Entity Relationship Diagram](https://github.com/xTrot/tonight/tree/master/Documents/ERD.png)
 
 Note: Everything included in this document is subject to change.

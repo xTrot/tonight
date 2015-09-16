@@ -20,4 +20,12 @@ The web-app will be hosted entirely on the Heroku’s servers. Heroku will provi
  - [ ] Testing
  - [ ] Project Plan Update 2
 
+## Gantt Chart:
+
+![Gantt Chart](/Gantt_Chart.png)
+
+## Entity Relationship Diagram:
+
+![Entity Relationship Diagram](/ERD.png)
+
 Note: Everything included in this document is subject to change.
