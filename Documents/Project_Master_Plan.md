@@ -22,7 +22,9 @@ The web-app will be hosted entirely on the Heroku’s servers. Heroku will provi
  - [ ] Client/Server Comm. Dev
  - [ ] Testing
  - [ ] Project Plan Update 2
+ 
 ### Sprint #3 Task List: 
+
  - [ ] Refinement of Client Side 
  - [ ] Refinement of Server Side
  - [ ] Improvement of Client/Server Comm.
