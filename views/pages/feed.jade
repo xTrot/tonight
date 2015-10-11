@@ -1,0 +1,11 @@
+extends ../layout
+
+block headScripts
+  script(src="/angular/podsfeed.js")
+  script(src="/angular/pods.js")
+
+block content
+  .container-fluid(ng-controller="podsController as feed")
+    .container-fluid.well(ng-repeat="pod in feed.pods" ng-show="{{pod.post.visibility}}")
+      pod-header
+  

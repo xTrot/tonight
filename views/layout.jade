@@ -1,7 +1,15 @@
 doctype html
-html
+html(ng-app=ngapp)
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
+    script(src='/jquery/dist/jquery.min.js')
+    script(src='/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/angular/angular.min.js')
+    block headScripts
   body
-    block content
+    include ./modules/navbar
+    .container-fluid
+      block content
