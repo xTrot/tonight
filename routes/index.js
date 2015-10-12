@@ -13,7 +13,12 @@ router.get('/feed', function(req, res, next) {
 
 /* GET index page. */
 router.get('/', function(req, res, next) {
-  res.render('pages/index', {title: "Tonight"});
+  res.render('pages/index', {title: "Tonight",ngapp:"index"});
+});
+
+/*GET Register page */
+router.get('/register', function(req, res, next) {
+  res.render('pages/register', {title: "Tonight"});
 });
 
 module.exports = router;
