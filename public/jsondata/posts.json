@@ -1,41 +1,38 @@
 [
     {
-        "post": {
-            "postId": "0",
-            "author": "Enddy",
-            "date": "today",
-            "time": "5:00",
-            "text": "Chillin'with the homies.",
-            "image": null,
-            "video": null,
-            "link": null,
-            "visibility": true
-        }
+        "postId": "0",
+        "author": "Enddy",
+        "date": "today",
+        "time": "5:00",
+        "type": "text",
+        "text": "Chillin' with the homies.",
+        "image": null,
+        "video": null,
+        "link": null,
+        "visibility": true
     },
     {
-        "post": {
-            "postId": "0",
-            "author": "Delvin",
-            "date": "today",
-            "time": "5:10",
-            "text": "Not so chillin' with the homies.",
-            "image": null,
-            "video": null,
-            "link": null,
-            "visibility": true
-        }
+        "postId": "0",
+        "author": "Delvin",
+        "date": "today",
+        "time": "5:10",
+        "type": "text",
+        "text": "Not so chillin' with the homies.",
+        "image": null,
+        "video": null,
+        "link": null,
+        "visibility": true
     },
     {
-        "post": {
-            "postId": "0",
-            "author": "Victor",
-            "date": "today",
-            "time": "5:15",
-            "text": "I'd like to be chillin' with the homies.",
-            "image": null,
-            "video": null,
-            "link": null,
-            "visibility": false
-        }
+        "postId": "0",
+        "author": "Victor",
+        "date": "today",
+        "time": "5:15",
+        "type": "text",
+        "text": "I'd like to be chillin' with the homies.",
+        "image": null,
+        "video": null,
+        "link": null,
+        "visibility": true
     }
 ]
