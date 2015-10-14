@@ -17,3 +17,21 @@
 ### What to do next 
 
 - For Sprint #2 we will be working on the creation of the actual structure of the front end of the application using a JSON file. We will place our efforts in the development of the client pages, server requests, server database requests, and client/server communication. Once the development of these tasks are done, we will move on to their testing and finalize them when they pass all tests. We will also be drafting a new detailed project  development plan for Sprint #3.
+
+# Sprint Analysis #2:
+
+1. What worked well? 
+
+- For this sprint, the overall task of defining and understanding what was asked of us was the thing that worked the best for us. We were able to organize ourselves accorindgly and begin with outlining the important views of our project. We also had an easy time understanding the use of bootstrap in creating the views and feel like our code is quite well made in this aspect. Storing the dummy data in JSON files is also another aspect that worked well for us along with updating our progress through the use of the Gantt chart and master development plan. 
+
+2. What didn't worked well? 
+
+- The actual process of creating the views we needed for this sprint is the main task that did not work well for us. Although we understood bootstrap well enough to create some views, other views that needed our code to use angular.js and css became difficult to make and use all together. It became more apparent that we needed to understand how different formats of code come together in different files to create the same page to represent out views. Unfortunately, we were not able to meet the goal we had planned for this sprint, but we understand that we have completed the goal stipulated in this sprint's guidelines through our interpretation. 
+
+3. What we learned? 
+
+- What we learned was the need to have risk management implemented in our bi-weekly processes of finishing each sprint. The things that did not work well in this project slowed down our process and in some occasion brought it to a stop while we tried to figure a solution for it. This made it very difficult to achieve what we had set out to do from the beginning for this sprint and we noticed that it was majorly due to the fact that we didn't know how to proceed rationally when we came upon this sudden problem. We understand now that having a plan of how to proceed throughout each sprint is important, but it is more important to make each plan flexible enough that it can encounter serious issues, resolve them, and still go on track to be able to finish all of our tasks on time. We believe this is the most important thing that we learned from this sprint. We also learned a lot more about creating jade code using bootstrap to make our views. Although it became very difficult to implement both angular.js and css for some of the views that we were able to finish, we realized that our overall understanding of boostrap coding had become much better and our code had become much cleaner than what we had done in practices. We also came to understand that it is very difficult to verify css and angular.js code applied to our bootstrap code only using the browser and app itself. We need to find another way to possibly make it better and more efficient.
+
+### What to do next
+
+- For Sprint #3 we plan to further our understanding of the coding needed to finish the views and give our application a more unique style. For this we will need to understand the implementation of css, angular.js, bootstrap, and jade coding better so that will be our first goal. We also plan to add to the tasks we weren't able to finish for this sprint along to the ones we have designated for Sprint #3 to help ourselves feel more confident about the other sprints in the future and show that we are indeed progressing in the understanding of this project. 
