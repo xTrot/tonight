@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 
 /*GET Register page */
 router.get('/register', function(req, res, next) {
-  res.render('pages/register', {title: "Tonight"});
+  res.render('pages/register', {title: "Tonight",ngapp:"index"});
 });
 
 module.exports = router;
