@@ -1,4 +1,12 @@
 <div class="container-fluid nopadding">
-	<a href="#" class="lead text-left">{{pod.author}}</a><br/>
-	<p class="small text-left">{{pod.date}} at {{pod.time}}</p>
+	<div class="row">
+		<div class="col-xs-3">
+			<img class="img-rounded img-circle" src="/images/sample/{{pod.author}}_thumb.jpg"
+			alt="{{pod.author}}'s Thumbnail." style="max-height:50px"/>
+		</div>
+		<div class="col-xs-*">
+			<a href="#" class="lead text-left">{{pod.author}}</a><br/>
+			<p class="small text-left">{{pod.date}} at {{pod.time}}</p>
+		</div>
+	</div>
 </div>
