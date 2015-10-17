@@ -1,0 +1,21 @@
+{
+    "hang_id": 1,
+    "host": "Enddy",
+    "name": "Karaoke Night",
+	"thumb": "cueva_thumb.png",
+    "date_created": "2015-11-12",
+    "time_created": "01:00:00",
+    "date_event": "2015-11-12",
+    "time_event": "13:00:00",
+    "place": "Cueva Tarzan",
+    "private": true,
+    "going": [
+        "Enddy"
+    ],
+    "maybe": [
+        "Delvin"
+    ],
+    "not_going": [
+        "Victor"
+    ]
+}
