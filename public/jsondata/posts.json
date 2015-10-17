@@ -2,6 +2,7 @@
     {
         "postId": "0",
         "author": "Enddy",
+        "thumb": "Enddy_thumb.jpg",
         "date": "today",
         "time": "5:00",
         "type": "text",
@@ -14,6 +15,7 @@
     {
         "postId": "0",
         "author": "Delvin",
+        "thumb": "Delvin_thumb.jpg",
         "date": "today",
         "time": "5:10",
         "type": "text",
@@ -26,6 +28,7 @@
     {
         "postId": "0",
         "author": "Victor",
+        "thumb": "Victor_thumb.jpg",
         "date": "today",
         "time": "5:15",
         "type": "text",
