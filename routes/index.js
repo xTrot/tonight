@@ -21,4 +21,9 @@ router.get('/register', function(req, res, next) {
   res.render('pages/register', {title: "Tonight",ngapp:"index"});
 });
 
+/*GET Hang page */
+router.get('/hang', function(req, res, next) {
+  res.render('pages/hang', {title: "Tonight",ngapp:"hang"});
+});
+
 module.exports = router;

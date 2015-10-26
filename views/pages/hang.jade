@@ -1,0 +1,31 @@
+extends ../layout
+
+block headScripts
+  script(src="/angular/hang.js")
+  script(src="/angular/hang-directives.js")
+  style(type="text/css")
+    | .container-fluid.nopadding {
+    |   padding: 0 !important;
+    |   margin: 0 !important;
+    | }
+  
+block content
+  div(class="col-sm-6 col-sm-offset-3")
+    .container-fluid(ng-controller="hangController as hang")
+      div(class="panel-group")
+        div(class="panel panel-primary")
+          div(class="panel-heading") {{hang.info.name}} 
+          div(class="panel-body")
+            hang-info
+        div(class="panel panel-success")
+          div(class="panel-heading") Going
+          div(class="panel-body")
+            hang-going
+        div(class="panel panel-warning")
+          div(class="panel-heading") Maybe
+          div(class="panel-body")
+            hang-maybe
+        div(class="panel panel-danger")
+          div(class="panel-heading") Not Going
+          div(class="panel-body") 
+            hang-no
