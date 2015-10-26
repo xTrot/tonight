@@ -10,8 +10,9 @@ block headScripts
     | }
 
 block content
-  .col-md-6.col-md-offset-3
+  .col-sm-6.col-sm-offset-3
     .container-fluid(ng-controller="podsController as feed")
+      post-pod
       .well.well-sm(ng-repeat="pod in feed.pods" ng-show="{{pod.visibility}}")
         pod-header
         pod-content

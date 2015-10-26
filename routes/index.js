@@ -8,12 +8,17 @@ router.use(function timeLog(req, res, next) {
 
 /* GET feed page. */
 router.get('/feed', function(req, res, next) {
-  res.render('pages/feed', {title: "Tonight",ngapp:"podsfeed"});
+  res.render('pages/feed', {title: "Tonight-Feed",ngapp:"podsfeed"});
 });
 
 /* GET index page. */
 router.get('/', function(req, res, next) {
   res.render('pages/index', {title: "Tonight",ngapp:"index"});
+});
+
+/* GET friends page. */
+router.get('/friends', function(req, res, next) {
+  res.render('pages/friends', {title: "Tonight-Friends",ngapp:"index"});
 });
 
 /*GET Register page */
