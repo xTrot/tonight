@@ -1,0 +1,45 @@
+[
+  {
+    "id": 1,
+    "thumb":"Delvin_thumb.jpg",
+    "name":"Hanging Out Group",
+    "size":15
+  },
+  {
+    "id": 2,
+    "thumb":"Delvin_thumb.jpg",
+    "name":"UPRM Group",
+    "size":120
+  },
+  {
+    "id": 3,
+    "thumb":"Delvin_thumb.jpg",
+    "name":"My Girls Group",
+    "size":55
+  },
+  {
+    "id": 4,
+    "thumb":"Delvin_thumb.jpg",
+    "name":"Foo Group",
+    "size":152
+  },
+  {
+    "id": 5,
+    "thumb":"Delvin_thumb.jpg",
+    "name":"Hanging Group",
+    "size":40
+  },
+  {
+    "id": 6,
+    "thumb":"Delvin_thumb.jpg",
+    "name":"Hanging Group",
+    "size":45
+  },
+  {
+    "id": 7,
+    "thumb":"Delvin_thumb.jpg",
+    "name":"Hanging Group",
+    "size":62
+  }
+
+]
