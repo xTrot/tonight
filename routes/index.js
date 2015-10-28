@@ -18,7 +18,12 @@ router.get('/', function(req, res, next) {
 
 /* GET friends page. */
 router.get('/friends', function(req, res, next) {
-  res.render('pages/friends', {title: "Tonight-Friends",ngapp:"index"});
+  res.render('pages/friends', {title: "Tonight-Friends",ngapp:"friendsApp"});
+});
+
+/* GET group page. */
+router.get('/groups', function(req, res, next) {
+    res.render('pages/groups', {title: "Tonight-Friends",ngapp:"groupsApp"});
 });
 
 /*GET Register page */
