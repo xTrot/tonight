@@ -23,7 +23,7 @@ router.get('/friends', function(req, res, next) {
 
 /* GET group page. */
 router.get('/groups', function(req, res, next) {
-    res.render('pages/groups', {title: "Tonight-Friends",ngapp:"groupsApp"});
+    res.render('pages/groups', {title: "Tonight-Groups",ngapp:"groupsApp"});
 });
 
 /*GET Register page */

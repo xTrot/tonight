@@ -1,11 +1,11 @@
 extends ../layout
 
 block headScripts
-	script(src="/angular/controllers/friendsController.js")
-	script(src="/angular/directives/friendsContent.js")
+	script(src="/angular/controllers/groupsController.js")
+	script(src="/angular/directives/groupsContent.js")
 
 block content
-	div(data-role=content ng-controller="friendsController as fc")
+	div(data-role=content ng-controller="groupsController as gc")
 		.list-group
-			a(href="#" class="list-group-item" ng-repeat="f in fc.friends")
-				friend-content
+			a(href="#" class="list-group-item" ng-repeat="g in gc.groups")
+				groups-content

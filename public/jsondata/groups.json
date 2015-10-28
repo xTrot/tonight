@@ -1,45 +1,73 @@
 [
   {
     "id": 1,
-    "thumb":"Delvin_thumb.jpg",
-    "name":"Hanging Out Group",
+    "thumb":"HackPR_thumb.jpg",
+    "name":"HackPR Group",
     "size":15
   },
   {
     "id": 2,
-    "thumb":"Delvin_thumb.jpg",
+    "thumb":"UPRM_thumb.jpg",
     "name":"UPRM Group",
     "size":120
   },
   {
     "id": 3,
-    "thumb":"Delvin_thumb.jpg",
-    "name":"My Girls Group",
+    "thumb":"IEEE_thumb.jpg",
+    "name":"IEEE Group",
     "size":55
   },
   {
     "id": 4,
-    "thumb":"Delvin_thumb.jpg",
-    "name":"Foo Group",
-    "size":152
+    "thumb":"HackPR_thumb.jpg",
+    "name":"HackPR Group",
+    "size":15
   },
   {
     "id": 5,
-    "thumb":"Delvin_thumb.jpg",
-    "name":"Hanging Group",
-    "size":40
+    "thumb":"UPRM_thumb.jpg",
+    "name":"UPRM Group",
+    "size":120
   },
   {
     "id": 6,
-    "thumb":"Delvin_thumb.jpg",
-    "name":"Hanging Group",
-    "size":45
-  },
+    "thumb":"IEEE_thumb.jpg",
+    "name":"IEEE Group",
+    "size":55
+  },  {
+  "id": 1,
+  "thumb":"HackPR_thumb.jpg",
+  "name":"HackPR Group",
+  "size":15
+},
   {
     "id": 7,
-    "thumb":"Delvin_thumb.jpg",
-    "name":"Hanging Group",
-    "size":62
+    "thumb":"UPRM_thumb.jpg",
+    "name":"UPRM Group",
+    "size":120
+  },
+  {
+    "id": 8,
+    "thumb":"IEEE_thumb.jpg",
+    "name":"IEEE Group",
+    "size":55
+  },  {
+  "id": 9,
+  "thumb":"HackPR_thumb.jpg",
+  "name":"HackPR Group",
+  "size":15
+},
+  {
+    "id": 10,
+    "thumb":"UPRM_thumb.jpg",
+    "name":"UPRM Group",
+    "size":120
+  },
+  {
+    "id": 11,
+    "thumb":"IEEE_thumb.jpg",
+    "name":"IEEE Group",
+    "size":55
   }
 
 ]
