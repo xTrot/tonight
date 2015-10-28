@@ -34,4 +34,22 @@
 
 ### What to do next
 
-- For Sprint #3 we plan to further our understanding of the coding needed to finish the views and give our application a more unique style. For this we will need to understand the implementation of css, angular.js, bootstrap, and jade coding better so that will be our first goal. We also plan to add to the tasks we weren't able to finish for this sprint along to the ones we have designated for Sprint #3 to help ourselves feel more confident about the other sprints in the future and show that we are indeed progressing in the understanding of this project. 
+- For Sprint #3 we plan to further our understanding of the coding needed to finish the views and give our application a more unique style. For this we will need to understand the implementation of css, angular.js, bootstrap, and jade coding better so that will be our first goal. We also plan to add to the tasks we weren't able to finish for this sprint along to the ones we have designated for Sprint #3 to help ourselves feel more confident about the other sprints in the future and show that we are indeed progressing in the understanding of this project.
+
+# Sprint Analysis #3:
+
+1. What worked well? 
+
+- The best thing that worked for this sprint was the overall attention to detail each group member had in creating the views for client side. This time consuming task allowed us to create and modify existent views so as to make them visually better and more appealing to our customer base. This result motivated thr group members to perform even better on the views that were assigned for this sprint. 
+
+2. What didn't worked well? 
+
+- Although paying attention to the finer details of the project is one of things that worked well for us, it is also one of the things that caused the major trouble at the beginning of this sprint. It was a time consuming task that took away most of the time we had planned to use to progress other areas of the project. This caused us to abort any other type of progress on anything that did not have to do with the views becoming visually better. This has made our work pile up becoming more extensive for the upcoming sprint where we will have to complete all the tasks that we failed to even start in this sprint. 
+
+3. What we learned? 
+
+- We learned that the task that works best for one area of the project may also become the greatest hindrance in other aspects. In this case, it is relevant to mention that our group member's attention to detail created visually better client side views, but made our other tasks pile up as they were unable to be started due to a lack of time. We also learned that we need to redistribute our tasks more efficiently as to avoid various group memebers doing the same job and wasting double the time. We want our process to proceed as smoothly and fast as possible to obtain the needed results quicker and ready for feedback from our instructor. It is a necessity that we place in practice what we learned in this sprint for other sprints and avoid our process from halting again from overstaffing a task. 
+
+### What to do next
+
+- For Sprint #4 we plan to finalize the views for the client side and begin the creation of the server side that will interact with the client side to make the views appear. This will be done by using queries and defining the way the data will be retrieved through the database to be displayed. We plan to update the Gantt Chart and Master development project plan so as to show our progress along the way and take into considerations all the deviations we had from our expected procedure for completing this application. 
