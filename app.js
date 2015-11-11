@@ -5,6 +5,7 @@ var logger = require('morgan');
 var pg = require('pg');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -21,7 +22,8 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('th1san1ts3kr37'));
+app.use(session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);

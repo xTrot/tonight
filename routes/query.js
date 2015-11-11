@@ -7,6 +7,10 @@ var pg = require('pg');
 var connectionString = require(path.join(__dirname, '../', 'config'));
 
 
+var USER_LOGIN = 
+    "SELECT user_id FROM tonight.users"+
+    " WHERE email=$1 AND password=$2";
+
 var QUERY_FRIENDS =
     "SELECT first_name, last_name, email, birthday" +
     " FROM tonight.users;";
@@ -20,7 +24,7 @@ var GET_USER_ID =
     " WHERE email=$1 AND password=$2";
 
 
-//get friends
+//Get friends
 router.get('/friends', function(req, res) {
     sendQuery(res, QUERY_FRIENDS);
 });
@@ -103,6 +107,49 @@ router.post('/register', function(req, res) {
 
 });
 
+// User Login
+router.post('/login', function(req, res) {
+    var results = [];
+    // Grab data from http request
+    var data = {
+        email: req.body.email,
+        password: req.body.password
+    };
+
+    console.log(data);
+
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+
+        // SQL Query > User Authentication
+        var query = client.query(USER_LOGIN, [data.email, data.password]);
+
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            if (results[0]) {
+                console.log("User: "+results[0].user_id+" Authenticated");
+                req.session.user_id = results[0].user_id;
+                res.redirect('/feed');
+            } else {
+                res.render("pages/index",{error:"Wrong email or password."});
+            }
+        });
+
+    });
+
+});
 
 
 
