@@ -13,7 +13,7 @@ var USER_LOGIN =
 
 var QUERY_FRIENDS =
     "SELECT first_name, last_name, email, birthday" +
-    " FROM tonight.users;";
+    " FROM tonight.users";
 
 var NEW_USER =
     "INSERT INTO tonight.users(first_name, last_name, email, password)" +
@@ -22,11 +22,54 @@ var NEW_USER =
 var GET_USER_ID =
     "SELECT user_id FROM tonight.users" +
     " WHERE email=$1 AND password=$2";
+    
+var QUERY_GROUPS =
+    "SELECT name" +
+    " FROM tonight.groups";
 
 
 //Get friends
 router.get('/friends', function(req, res) {
     sendQuery(res, QUERY_FRIENDS);
+});
+
+
+
+function sendQuery(res, QUERY) {
+    
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(QUERY);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+            console.log(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
+}
+
+//Get groups
+router.get('/groups', function(req, res) {
+    sendQuery(res, QUERY_GROUPS);
 });
 
 

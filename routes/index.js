@@ -36,4 +36,14 @@ router.get('/hang', function(req, res, next) {
   res.render('pages/hang', {title: "Tonight",ngapp:"hang"});
 });
 
+/*GET MyProfile page */
+router.get('/profile', function(req, res, next) {
+  res.render('pages/myprofile', {title: "Tonight",ngapp:"registerApp"});
+});
+
+/*GET hangInfo page */
+router.get('/hanginf', function(req, res, next) {
+  res.render('pages/hanginfo', {title: "Tonight",ngapp:"registerApp"});
+});
+
 module.exports = router;

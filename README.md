@@ -52,4 +52,22 @@
 
 ### What to do next
 
-- For Sprint #4 we plan to finalize the views for the client side and begin the creation of the server side that will interact with the client side to make the views appear. This will be done by using queries and defining the way the data will be retrieved through the database to be displayed. We plan to update the Gantt Chart and Master development project plan so as to show our progress along the way and take into considerations all the deviations we had from our expected procedure for completing this application. 
+- For Sprint #4 we plan to finalize the views for the client side and begin the creation of the server side that will interact with the client side to make the views appear. This will be done by using queries and defining the way the data will be retrieved through the database to be displayed. We plan to update the Gantt Chart and Master development project plan so as to show our progress along the way and take into considerations all the deviations we had from our expected procedure for completing this application.
+
+# Sprint Analysis #4:
+
+1. What worked well? 
+
+- In this sprint, the best thing that worked for us was the knowledge of the many packages that express has. This helped us a lot when we were trying to code difficult parts of the application that would otherwise have taken large and tedious amounts of work. It provided already programmed codes that sped our process up and helped us move on to more difficult issues in this phase which were the client/server communication. 
+
+2. What didn't worked well? 
+
+- The most difficult part of this sprint and definitely the issue that did not work as well as we hoped for during most of this phase was the sending of information through a post. We lacked enough knowledge to know how to use post with the html code and how we could communicate with the database to extract information. We had a lot of problems in this aspect because our views were involved in using the form tag to encompass all the required input from the user, but we didn't know how to pass this information on to other pages. We came to realize, however, that the form tag has an attribute called method that is able to to change between get and post. We learned that it's default option is get when not specified which explained why all our forms were always doing gets with the test information provided. 
+ 
+3. What we learned? 
+
+- What was our biggest obtsacle also became our greatest source of information because, to solve the mystery on how to post, we needed to do a lot of research. This research on html tags and their attributes introduced us to many useful codes that we could use in the future to better the general look of our application and it's functionality. We also understood the get function of our forms better and how we could use this function to retrieve information from the database and show it in our views. This initialized our efforts into establishing communication between the client and server.
+
+### What to do next
+
+- For Sprint #5 we plan to finish our application or get as close as possible to finalize our work and have a working prototype. With all the advancements that we have made throughout the semester, we feel confident that we can reach our goal by the end of this phase. We plan to finalize the the communication between the server and the client which will enable to get and post to and from the database and have all the views working correctly with their underlyig functionality.  

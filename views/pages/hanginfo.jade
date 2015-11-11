@@ -1,0 +1,32 @@
+extends ../layout
+
+block headScripts
+  script(src="/angular/index.js")
+  script(src="/stylesheets/color.css")
+
+block content
+  .container-fluid
+    .row
+      div(class="col-md-4 col-md-offset-4")
+        div(class="login-panel panel panel-default")
+          div(class="panel-heading")
+            h3(class="panel-title") Information on the Hang
+          div(class="panel-body")
+            form(name="form" role="form" method="post" novalidation)
+              .fieldset
+                div(class="form-group")
+                  p Date of the Hang
+                  input(class="form-control" placeholder="Date of Hang" type="date" name="date")
+                div(class="form-group")
+                  p Time of the Hang
+                  input(class="form-control" placeholder="Time of Hang" type="time" name="time")
+                div(class="form-group")
+                  input(class="form-control" placeholder="Location of Hang" type="text" name="place")
+                div(class="form-group") Privacy
+                  div(class="radio")
+                    input(class="col-xs-2" type="radio" name="radioChoice" id="everyone")
+                    label(for="everyone") Everyone
+                  div(class="radio")
+                    input(class="col-xs-2" type="radio" name="radioChoice" id="friends")
+                    label(for="friends") Only Friends
+                input(type="Submit" value="Create Hang")

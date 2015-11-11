@@ -1,0 +1,34 @@
+extends ../layout
+
+block headScripts
+  script(src="/angular/index.js")
+  script(src="/stylesheets/color.css")
+ 
+
+block content
+   .container-fluid
+      div(class="well well-lg")
+         img(class="img-rounded img-responsive" src="/images/sample/Victor_thumb.jpg"
+         alt="Victor's Thumbnail." width="500" height="500")
+         div(class="h3 text-center bg-success") Victor E. Lugo Velez
+         
+         // Subsitute with tab code in feed
+      div(class="well well-lg")
+         ul(class="nav nav-tabs")
+            li(class="col-xs-4 active")
+               a(data-toggle='tab' href='#menu1' class="glyphicon glyphicon-camera")
+            li(class="col-xs-4")
+               a(data-toggle='tab' href='#menu2' class="glyphicon glyphicon-facetime-video")
+            li(class="col-xs-4")
+               a(data-toggle='tab' href='#menu3'  class="glyphicon glyphicon-list-alt")
+            div
+               .tab-content
+                  div(id="menu1" class="tab-pane fade-in active")
+                     h3 Photos
+                     p Some content.
+                  div(id="menu2" class="tab-pane fade-in")
+                     h3 Videos
+                     p Some content in menu 1.
+                  div(id="menu3" class="tab-pane fade-in")
+                     h3 Posts
+                     p Some content in menu 2.
