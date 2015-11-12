@@ -24,7 +24,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('th1san1ts3kr37'));
-app.use(session());
+app.use(session({
+    secret: "w3 go 0ut!",
+    proxy: true,
+    resave: true,
+    saveUninitialized: false
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
