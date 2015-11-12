@@ -193,7 +193,7 @@ router.post('/login', function(req, res) {
                     req.session.user_id = results[0].user_id;
                     res.redirect('/feed');
                 }else {
-                    res.redirect('/');
+                    res.redirect('/?error=true');
             }
             }; 
         });
@@ -202,6 +202,11 @@ router.post('/login', function(req, res) {
 
 });
 
+// Logout route
+router.get('/logout', function(req,res){
+    delete req.session.user_id;
+    res.redirect('/');
+});
 
 
 
