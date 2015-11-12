@@ -3,13 +3,14 @@ var router = express.Router();
 
 var path = require('path');
 var pg = require('pg');
+var bcrypt = require('bcrypt');
 
 var connectionString = require(path.join(__dirname, '../', 'config'));
 
 
 var USER_LOGIN = 
-    "SELECT user_id FROM tonight.users"+
-    " WHERE email=$1 AND password=$2";
+    "SELECT user_id,password FROM tonight.users"+
+    " WHERE email=$1";
 
 var QUERY_FRIENDS =
     "SELECT first_name, last_name, email, birthday" +
@@ -109,14 +110,18 @@ function sendQuery(res, QUERY) {
 //Registration
 router.post('/register', function(req, res) {
     var results = [];
+    
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(req.body.password, salt);
+    
     // Grab data from http request
     var data = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
-        password: req.body.password
+        password: hash
     };
-
+    
     console.log(data);
 
     // Get a Postgres client from the connection pool
@@ -153,6 +158,7 @@ router.post('/register', function(req, res) {
 // User Login
 router.post('/login', function(req, res) {
     var results = [];
+    
     // Grab data from http request
     var data = {
         email: req.body.email,
@@ -171,7 +177,7 @@ router.post('/login', function(req, res) {
         }
 
         // SQL Query > User Authentication
-        var query = client.query(USER_LOGIN, [data.email, data.password]);
+        var query = client.query(USER_LOGIN, [data.email]);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
@@ -182,12 +188,14 @@ router.post('/login', function(req, res) {
         query.on('end', function() {
             done();
             if (results[0]) {
-                console.log("User: "+results[0].user_id+" Authenticated");
-                req.session.user_id = results[0].user_id;
-                res.redirect('/feed');
-            } else {
-                res.render("pages/index",{error:"Wrong email or password."});
+                if(bcrypt.compareSync(data.password, results[0].password)){
+                    console.log("User: "+results[0].user_id+" Authenticated");
+                    req.session.user_id = results[0].user_id;
+                    res.redirect('/feed');
+                }else {
+                    res.redirect('/');
             }
+            }; 
         });
 
     });
