@@ -12,7 +12,17 @@ router.get('/feed', function(req, res, next) {
 });
 
 /* GET index page. */
-router.get('/:error?', function(req, res, next) {
+router.get('/', function(req, res, next) {
+  if(req.session.user_id){
+    res.redirect('/feed');
+  }else{
+    res.redirect('/login');
+  }
+  
+});
+
+/* GET login page. */
+router.get('/login/:error?', function(req, res, next) {
   if(req.session.user_id){
     res.redirect('/feed');
   }

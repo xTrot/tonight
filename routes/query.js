@@ -8,6 +8,10 @@ var bcrypt = require('bcrypt');
 var connectionString = require(path.join(__dirname, '../', 'config'));
 
 
+var USER_EXISTS = 
+    "SELECT user_id FROM tonight.users"+
+    " WHERE email=$1";
+
 var USER_LOGIN = 
     "SELECT user_id,password FROM tonight.users"+
     " WHERE email=$1";
@@ -132,6 +136,10 @@ router.post('/register', function(req, res) {
             console.log(err);
             return res.status(500).json({success: false, data: err});
         }
+        
+        //  Query for user existence.
+        //  If ther is a user with an email
+        //  it shouldn't be able to register again. 
 
         // SQL Query > Insert Data
         client.query(NEW_USER, [data.first_name, data.last_name, data.email, data.password]);
@@ -193,7 +201,7 @@ router.post('/login', function(req, res) {
                     req.session.user_id = results[0].user_id;
                     res.redirect('/feed');
                 }else {
-                    res.redirect('/?error=true');
+                    res.redirect('/login/?error=true');
             }
             }; 
         });
