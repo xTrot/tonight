@@ -13,7 +13,26 @@ router.get('/feed', function(req, res, next) {
 
 /* GET index page. */
 router.get('/', function(req, res, next) {
-  res.render('pages/index', {title: "Tonight",ngapp:"index"});
+  if(req.session.user_id){
+    res.redirect('/feed');
+  }else{
+    res.redirect('/login');
+  }
+  
+});
+
+/* GET login page. */
+router.get('/login/:error?', function(req, res, next) {
+  if(req.session.user_id){
+    res.redirect('/feed');
+  }
+  if (req.query.error) {
+    res.render('pages/index', {title: "Tonight",ngapp:"index",
+      error:"Wrong Username or password."});
+  }else{
+    res.render('pages/index', {title: "Tonight",ngapp:"index"});
+  }
+  
 });
 
 /* GET friends page. */
