@@ -215,8 +215,6 @@ router.post('/login', function(req, res) {
         password: req.body.password
     };
 
-    console.log(data);
-
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
         // Handle connection errors
