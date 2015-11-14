@@ -16,14 +16,14 @@ block content
               .fieldset
                 div(class="form-group")
                   p Date of the Hang
-                  input(class="form-control" placeholder="Date of Hang" type="date" name="date")
+                  input(class="form-control" placeholder="Date of Hang" type="date" name="date" required)
                 div(class="form-group")
                   p Time of the Hang
-                  input(class="form-control" placeholder="Time of Hang" type="time" name="time")
+                  input(class="form-control" placeholder="Time of Hang" type="time" name="time" required)
                 div(class="form-group")
-                  input(class="form-control" placeholder="Location of Hang" type="text" name="place")
+                  input(class="form-control" placeholder="Location of Hang" type="text" name="place" required)
                 div(class="form-group") Privacy
-                  div(class="radio")
+                  div(class="radio" required)
                     input(class="col-xs-2" type="radio" name="radioChoice" id="everyone")
                     label(for="everyone") Everyone
                   div(class="radio")

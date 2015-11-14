@@ -28,7 +28,7 @@ block content
               name="number" type="number" ng-model="regData.phone" min="1000000000" max="9999999999")
             div(class="form-group")
               p Date of Birth
-              input(class="form-control" placeholder="12" type="date")
+              input(class="form-control" placeholder="12" type="date" required)
 
             div(class="form-group" ng-class="{ 'has-error': form.password.$invalid && form.password.$dirty }")
               p Password
