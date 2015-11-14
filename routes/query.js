@@ -31,7 +31,10 @@ var GET_USER_ID =
 var QUERY_GROUPS =
     "SELECT name" +
     " FROM tonight.groups";
-
+    
+var QUERY_BUSINESS =
+    "SELECT name" +
+    " FROM tonight.business_pages";
 
 //Get friends
 router.get('/friends', function(req, res) {
@@ -75,6 +78,45 @@ function sendQuery(res, QUERY) {
 //Get groups
 router.get('/groups', function(req, res) {
     sendQuery(res, QUERY_GROUPS);
+});
+
+
+
+function sendQuery(res, QUERY) {
+    
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(QUERY);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+            console.log(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
+}
+
+//Get business
+router.get('/business', function(req, res) {
+    sendQuery(res, QUERY_BUSINESS);
 });
 
 

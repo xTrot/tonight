@@ -1,0 +1,11 @@
+extends ../layout
+
+block headScripts
+	script(src="/angular/controllers/businessController.js")
+	script(src="/angular/directives/businessContent.js")
+
+block content
+	div(data-role=content ng-controller="businessController as bc")
+		.list-group
+			a(href="#" class="list-group-item" ng-repeat="b in bc.business")
+				business-content

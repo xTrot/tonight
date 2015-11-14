@@ -70,4 +70,14 @@ router.get('/groupinf', function(req, res, next) {
   res.render('pages/groupinfo', {title: "Tonight",ngapp:"registerApp"});
 });
 
+/*Get businessinfo page */
+router.get('/businessinf', function(req, res, next) {
+  res.render('pages/businessinfo', {title: "Tonight",ngapp:"registerApp"});
+});
+
+/*Get business page */
+router.get('/businesses', function(req, res, next){
+  res.render('pages/business', {title: "tonight", ngapp:"businessApp"});
+});
+
 module.exports = router;
