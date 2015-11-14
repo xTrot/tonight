@@ -47,6 +47,10 @@ var QUERY_GROUPS =
 var QUERY_BUSINESS =
     "SELECT name" +
     " FROM tonight.business_pages";
+    
+var QUERY_POST =
+    "INSERT INTO tonight.posts(text,visible,user_id,type)"+
+    " values($1,$2,$3,$4)";
 
 //Get friends
 router.get('/friends', function(req, res) {
@@ -320,8 +324,6 @@ router.post('/login', function(req, res) {
         password: req.body.password
     };
 
-    console.log(data);
-
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
         // Handle connection errors
@@ -355,6 +357,35 @@ router.post('/login', function(req, res) {
 
     });
 
+});
+
+router.post('/post',function name(req,res) {
+    var results = [];
+    
+    // Grab data from http request
+    var data = {
+        text: req.body.text,
+        visible: true,
+        user_id:req.session.user_id,
+        ptype: req.body.type
+        };
+    console.log(data);
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+
+        // SQL Query > User Authentication
+        client.query(QUERY_POST, [data.text,data.visible,data.user_id,data.ptype]);
+
+        res.redirect('/feed');
+    });
+    
 });
 
 // Logout route
