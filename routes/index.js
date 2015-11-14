@@ -46,4 +46,9 @@ router.get('/hanginf', function(req, res, next) {
   res.render('pages/hanginfo', {title: "Tonight",ngapp:"registerApp"});
 });
 
+/*Get groupinfo page */
+router.get('/groupinf', function(req, res, next) {
+  res.render('pages/groupinfo', {title: "Tonight",ngapp:"registerApp"});
+});
+
 module.exports = router;
