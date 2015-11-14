@@ -12,11 +12,11 @@ block content
           div(class="panel-heading")
             h3(class="panel-title") Group Information
           div(class="panel-body")
-            form(name="form" role="form" method="post" novalidation)
+            form(name="form" role="form" method="post" action="query/groupinfo" novalidation)
               fieldset
                 div(class="form-group")
                   p Group's Name
                   input(class="form-control" placeholder="Buddies" type="text" name="name" required)
                 div(class="form-group")
                   p Add people to the group
-                input(class="btn btn-lg btn-info" type="submit" value="Create Group")
+                input(class="btn btn-lg btn-info" type="submit" value="Create Group" href="/groups")

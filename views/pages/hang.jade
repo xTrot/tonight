@@ -14,7 +14,7 @@ block content
     .container-fluid(ng-controller="hangController as hang")
       div(class="panel-group")
         div(class="panel panel-primary")
-          div(class="panel-heading") {{hang.info.name}} 
+          div(class="panel-heading") {{hang.info[0].name}} 
           div(class="panel-body")
             hang-info
         div(class="panel panel-success")

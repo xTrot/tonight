@@ -4,7 +4,9 @@
 	app.controller('hangController', ['$http',function($http){
 		var hang = this;
 		hang.info = [];
-		$http.get('/jsondata/hang.json').success(function (data) {
+		
+		$http.get('/query/hang').success(function (data) {
+		  console.log("\n\n*** Data: " + data);
 		  hang.info=data;
 		});
 	}]);

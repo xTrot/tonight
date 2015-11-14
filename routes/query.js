@@ -19,10 +19,22 @@ var USER_LOGIN =
 var QUERY_FRIENDS =
     "SELECT first_name, last_name, email, birthday" +
     " FROM tonight.users";
+    
+var QUERY_HANG =
+    "SELECT name" +
+    " FROM tonight.hangs";
 
 var NEW_USER =
     "INSERT INTO tonight.users(first_name, last_name, email, password)" +
     " VALUES($1, $2, $3, $4)";
+    
+var NEW_BUSINESS =
+    "INSERT INTO tonight.business_pages(user_id, name)" +
+    " VALUES($1, $2)"; 
+    
+var NEW_GROUP =
+    "INSERT INTO tonight.groups(user_id, name)" +
+    " VALUES($1, $2)";
 
 var GET_USER_ID =
     "SELECT user_id FROM tonight.users" +
@@ -153,6 +165,45 @@ function sendQuery(res, QUERY) {
     });
 }
 
+//Get hang
+router.get('/hang', function(req, res) {
+    sendQuery(res, QUERY_HANG);
+});
+
+
+
+function sendQuery(res, QUERY) {
+    
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(QUERY);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+            console.log(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
+}
+
 //Registration
 router.post('/register', function(req, res) {
     var results = [];
@@ -200,6 +251,60 @@ router.post('/register', function(req, res) {
             return res.json(results);
 
         });
+
+    });
+
+});
+
+//Businesses
+router.post('/businesses', function(req, res) {
+    var results = [];
+
+    // Grab data from http request
+    var data = {
+        name: req.body.name
+    };
+    
+    console.log(data);
+
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+        // SQL Query > Insert Data
+        client.query(NEW_BUSINESS, [40, data.name]);     
+        res.redirect('/businesses');
+
+    });
+
+});
+
+//Groups
+router.post('/groupinfo', function(req, res) {
+    var results = [];
+
+    // Grab data from http request
+    var data = {
+        name: req.body.name
+    };
+    
+    console.log(data);
+
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+        // SQL Query > Insert Data
+        client.query(NEW_GROUP, [40, data.name]);     
+        res.redirect('/groups');
 
     });
 
