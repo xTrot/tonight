@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET login page. */
-router.get('/login/:error?', function(req, res, next) {
+router.get('/login:error?', function(req, res, next) {
   if(req.session.user_id){
     res.redirect('/feed');
   }

@@ -201,7 +201,7 @@ router.post('/login', function(req, res) {
                     req.session.user_id = results[0].user_id;
                     res.redirect('/feed');
                 }else {
-                    res.redirect('/login/?error=true');
+                    res.redirect('/login?error=true');
             }
             }; 
         });
