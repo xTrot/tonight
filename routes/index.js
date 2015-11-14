@@ -1,13 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
+// Authientication checking middleware.
+// To use add checkAuth to a route after
+// the routing string.
+function checkAuth(req, res, next) {
+    if (req.session.user_id) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+}
+
 router.use(function timeLog(req, res, next) {
   console.log('Time: ', Date.now());
   next();
 });
 
 /* GET feed page. */
-router.get('/feed', function(req, res, next) {
+router.get('/feed',checkAuth, function(req, res, next) {
   res.render('pages/feed', {title: "Tonight-Feed",ngapp:"podsfeed"});
 });
 
@@ -36,12 +47,12 @@ router.get('/login:error?', function(req, res, next) {
 });
 
 /* GET friends page. */
-router.get('/friends', function(req, res, next) {
+router.get('/friends', checkAuth, function(req, res, next) {
   res.render('pages/friends', {title: "Tonight-Friends",ngapp:"friendsApp"});
 });
 
 /* GET group page. */
-router.get('/groups', function(req, res, next) {
+router.get('/groups', checkAuth, function(req, res, next) {
     res.render('pages/groups', {title: "Tonight-Groups",ngapp:"groupsApp"});
 });
 
@@ -66,7 +77,7 @@ router.get('/hanginf', function(req, res, next) {
 });
 
 /*Get groupinfo page */
-router.get('/groupinf', function(req, res, next) {
+router.get('/groupinf',checkAuth, function(req, res, next) {
   res.render('pages/groupinfo', {title: "Tonight",ngapp:"registerApp"});
 });
 
