@@ -12,7 +12,7 @@ block content
           div(class="panel-heading")
             h3(class="panel-title") Busines Information
           div(class="panel-body")
-            form(name="form" role="form" method="post" novalidation)
+            form(name="form" role="form" method="post" action="query/businesses" novalidation)
               fieldset
                 div(class="form-group")
                   p Name of the Business
@@ -29,4 +29,4 @@ block content
                 div(class="form-group")
                   p Address
                   input(class="form-control" type="text" name="adress")
-                input(class="btn btn-lg btn-info" type="submit" value="Create Business Page")
+                input(class="btn btn-lg btn-info" type="submit" value="Create Business Page" href="/businesses")

@@ -72,8 +72,8 @@ router.get('/profile', function(req, res, next) {
 });
 
 /*GET hangInfo page */
-router.get('/hanginf', function(req, res, next) {
-  res.render('pages/hanginfo', {title: "Tonight",ngapp:"registerApp"});
+router.get('/hanginf:hangname?', function(req, res, next) {
+  res.render('pages/hanginfo', {title: "Tonight",hangname: req.query.hangname ,ngapp:"registerApp"});
 });
 
 /*Get groupinfo page */
