@@ -52,6 +52,10 @@ var QUERY_POST =
     "INSERT INTO tonight.posts(text,visible,user_id,type)"+
     " values($1,$2,$3,$4)";
 
+var CHECK_USER =
+    "SELECT user_id FROM tonight.users" +
+    " WHERE email=$1";
+
 //Get friends
 router.get('/friends', function(req, res) {
     sendQuery(res, QUERY_FRIENDS);
@@ -211,10 +215,10 @@ function sendQuery(res, QUERY) {
 //Registration
 router.post('/register', function(req, res) {
     var results = [];
-    
+
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(req.body.password, salt);
-    
+
     // Grab data from http request
     var data = {
         first_name: req.body.first_name,
@@ -222,8 +226,8 @@ router.post('/register', function(req, res) {
         email: req.body.email,
         password: hash
     };
-    
-    console.log(data);
+
+    //console.log(data);
 
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
@@ -233,28 +237,40 @@ router.post('/register', function(req, res) {
             console.log(err);
             return res.status(500).json({success: false, data: err});
         }
-        
-        //  Query for user existence.
-        //  If ther is a user with an email
-        //  it shouldn't be able to register again. 
 
-        // SQL Query > Insert Data
-        client.query(NEW_USER, [data.first_name, data.last_name, data.email, data.password]);
+        client.query(CHECK_USER, [data.email], function(err, result) {
+            var tempUserID = result.rows[0];
 
-        // SQL Query > Select Data
-        var query = client.query(GET_USER_ID, [data. email, data.password]);
+            //console.log(tempUserID);
+            if(tempUserID == null) {
+                // SQL Query > Insert Data
+                client.query(NEW_USER, [data.first_name, data.last_name, data.email, data.password]);
 
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            results.push(row);
-        });
+                // SQL Query > Select Data
+                var query = client.query(GET_USER_ID, [data.email, data.password]);
 
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
+                // Stream results back one row at a time
+                query.on('row', function (row) {
+                    results.push(row);
+                });
+
+                // After all data is returned, close connection and return results
+                query.on('end', function() {
+                    done();
+
+                });
+
+            }
+            else{
+                results.push({ user_id: -1 });
+                //res.redirect('/register?error=true');
+
+            }
+
             done();
             return res.json(results);
-
         });
+
 
     });
 
