@@ -1,9 +1,19 @@
 var express = require('express');
+var upload = require('express-upload');
+var gm = require('gm');
 var router = express.Router();
 
 var path = require('path');
 var pg = require('pg');
 var bcrypt = require('bcrypt');
+
+var uploadThumb = upload()
+    .accept([/image.*/])
+    .gm(function(gm) {
+        return gm.resize(false, 100);
+    })
+    .to('public/images/thumbs/');
+
 
 var connectionString = require(path.join(__dirname, '../', 'config'));
 
@@ -386,6 +396,21 @@ router.post('/post',function name(req,res) {
         res.redirect('/feed');
     });
     
+});
+
+router.post('/uploadThumb',function(req,res){
+    console.log(req.files);
+    uploadThumb.exec(req.files.image, function(err, file) {
+        console.log(req.files);
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(file);
+            console.log('Got a file', file, 'uploaded to public/images with name', file.name);
+        }
+        
+        res.redirect('/');
+    });
 });
 
 // Logout route

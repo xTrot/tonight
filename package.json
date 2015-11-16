@@ -15,6 +15,8 @@
     "pg": "4.4.1",
     "serve-favicon": "~2.3.0",
     "express-session":"1.12.1",
-    "bcrypt":"0.8.5"
+    "bcrypt":"0.8.5",
+    "gm":"1.21.1",
+    "express-upload":"0.1.0"
   }
 }
