@@ -272,13 +272,11 @@ router.post('/register', function(req, res) {
 
             }
             else{
-                results.push({ user_id: -1 });
                 res.redirect('/register?error=true');
-
             }
-
+            
+            res.redirect('/login');
             done();
-            return res.json(results);
         });
 
 
