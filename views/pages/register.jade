@@ -3,7 +3,6 @@ extends ../layout
 block headScripts
   script(src="/angular/index.js")
   script(src="/stylesheets/color.css")
-  script(src="/angular/controllers/registerController.js")
 
 block content
   .container-fluid
@@ -13,30 +12,30 @@ block content
           div(class="panel-heading")
             h3(class="panel-title") Needed User Information 
           div(class="panel-body")
-            p(style="color:red") {{user_exists}}
-            div(class="form-group" ng-class="{ 'has-error': form.Fname.$invalid && form.Fname.$dirty }")
-              p Personal
-              input(class="form-control" placeholder="First Name"
-              name="Fname" type="name" ng-model="regData.first_name" required)
-            div(class="form-group" ng-class="{ 'has-error': form.Lname.$invalid && form.Lname.$dirty }")
-              input(class="form-control" placeholder="Last Name"
-              name="Lname" type="name" ng-model="regData.last_name" required)
-            div(class="form-group" ng-class="{ 'has-error': form.email.$invalid && form.email.$dirty }")
-              input(class="form-control" placeholder="E-mail"
-              name="email" type="email" ng-model="regData.email" required)
-            div(class="form-group" ng-class="{ 'has-error': form.number.$invalid && form.number.$dirty }")
-              input(class="form-control" placeholder="Cellphone"
-              name="number" type="number" ng-model="regData.phone" min="1000000000" max="9999999999")
-            div(class="form-group")
-              p Date of Birth
-              input(class="form-control" placeholder="12" type="date" required)
-
-            div(class="form-group" ng-class="{ 'has-error': form.password.$invalid && form.password.$dirty }")
-              p Password
-              input(class="form-control" placeholder="Password"
-              name="password" type="password" ng-model="regData.password" required)
-            div(class="form-group" ng-class="{ 'has-error': form.Cpassword.$invalid && form.Cpassword.$dirty }")
-              input(class="form-control" placeholder="Confirm Password"
-              name="Cpassword" type="password" ng-model="regData.cPassword" required)
-            div(class="form-group")
-              a(class="btn btn-lg btn-info" ng-click="createUser()" type="submit") Submit
+            form(name="form" role="form" method="post" action="query/register" novalidation)
+              p(class="text-warning")= error
+              div(class="form-group" ng-class="{ 'has-error': form.Fname.$invalid && form.Fname.$dirty }")
+                p Personal
+                input(class="form-control" placeholder="First Name"
+                name="Fname" type="name" ng-model="regData.first_name" required)
+              div(class="form-group" ng-class="{ 'has-error': form.Lname.$invalid && form.Lname.$dirty }")
+                input(class="form-control" placeholder="Last Name"
+                name="Lname" type="name" ng-model="regData.last_name" required)
+              div(class="form-group" ng-class="{ 'has-error': form.email.$invalid && form.email.$dirty }")
+                input(class="form-control" placeholder="E-mail"
+                name="email" type="email" ng-model="regData.email" required)
+              div(class="form-group" ng-class="{ 'has-error': form.number.$invalid && form.number.$dirty }")
+                input(class="form-control" placeholder="Cellphone"
+                name="number" type="number" ng-model="regData.phone" min="1000000000" max="9999999999")
+              div(class="form-group")
+                p Date of Birth
+                input(class="form-control" placeholder="12" type="date" required)
+              div(class="form-group" ng-class="{ 'has-error': form.password.$invalid && form.password.$dirty }")
+                p Password
+                input(class="form-control" placeholder="Password"
+                name="password" type="password" ng-model="regData.password" required)
+              div(class="form-group" ng-class="{ 'has-error': form.Cpassword.$invalid && form.Cpassword.$dirty }")
+                input(class="form-control" placeholder="Confirm Password"
+                name="Cpassword" type="password" ng-model="regData.cPassword" required)
+              div(class="form-group")
+                input(class="btn btn-lg btn-info" type="submit" value="Register")

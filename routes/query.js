@@ -273,7 +273,7 @@ router.post('/register', function(req, res) {
             }
             else{
                 results.push({ user_id: -1 });
-                //res.redirect('/register?error=true');
+                res.redirect('/register?error=true');
 
             }
 
@@ -288,8 +288,7 @@ router.post('/register', function(req, res) {
 
 //Businesses
 router.post('/businesses', function(req, res) {
-    var results = [];
-
+    
     // Grab data from http request
     var data = {
         name: req.body.name
@@ -315,8 +314,7 @@ router.post('/businesses', function(req, res) {
 
 //Groups
 router.post('/groupinfo', function(req, res) {
-    var results = [];
-
+    
     // Grab data from http request
     var data = {
         name: req.body.name
@@ -386,7 +384,6 @@ router.post('/login', function(req, res) {
 });
 
 router.post('/post',function name(req,res) {
-    var results = [];
     
     // Grab data from http request
     var data = {

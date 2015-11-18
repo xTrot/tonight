@@ -57,8 +57,13 @@ router.get('/groups', checkAuth, function(req, res, next) {
 });
 
 /*GET Register page */
-router.get('/register', function(req, res, next) {
-  res.render('pages/register', {title: "Tonight",ngapp:"registerApp"});
+router.get('/register:error?', function(req, res, next) {
+  if (req.query.error) {
+    res.render('pages/register', {title: "Tonight",ngapp:"registerApp",
+    error:"Email already registered."});
+  }else{
+    res.render('pages/register', {title: "Tonight",ngapp:"registerApp"});
+  }
 });
 
 /*GET Hang page */
