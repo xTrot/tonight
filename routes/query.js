@@ -224,8 +224,6 @@ function sendQuery(res, QUERY) {
 
 //Registration
 router.post('/register', function(req, res) {
-    var results = [];
-
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(req.body.password, salt);
 
@@ -247,41 +245,32 @@ router.post('/register', function(req, res) {
             console.log(err);
             return res.status(500).json({success: false, data: err});
         }
-
+        
         client.query(CHECK_USER, [data.email], function(err, result) {
             var tempUserID = result.rows[0];
 
             //console.log(tempUserID);
-            if(tempUserID == null) {
-                // SQL Query > Insert Data
-                client.query(NEW_USER, [data.first_name, data.last_name, data.email, data.password]);
-
-                // SQL Query > Select Data
-                var query = client.query(GET_USER_ID, [data.email, data.password]);
-
-                // Stream results back one row at a time
-                query.on('row', function (row) {
-                    results.push(row);
-                });
-
-                // After all data is returned, close connection and return results
-                query.on('end', function() {
-                    done();
-
-                });
-
-            }
-            else{
+            if(tempUserID){
                 res.redirect('/register?error=true');
+                done();
+                return;
             }
-            
-            res.redirect('/login');
-            done();
         });
-
-
     });
 
+     pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+
+        client.query(NEW_USER, [data.first_name, data.last_name, data.email, data.password]);
+        res.redirect('/login');
+        done();
+        return;
+    });
 });
 
 //Businesses
