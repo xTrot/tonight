@@ -9,6 +9,16 @@ block headScripts
     |   margin: 0 !important;
     | }
 
+block nav_buttons
+  li.active
+    a(href="/feed") Feed
+  li
+    a(href="/hangs") Hangs
+  li
+    a(href="/friends") Friends
+  li
+    a(href="/myprofile") My Profile
+
 block content
   .col-sm-6.col-sm-offset-3(ng-controller="podsController as feed")
     .well.well-sm
