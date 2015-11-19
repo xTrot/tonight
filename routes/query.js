@@ -27,7 +27,7 @@ var USER_LOGIN =
     " WHERE email=$1";
 
 var QUERY_FRIENDS =
-    "SELECT first_name, last_name, email, birthday" +
+    "SELECT user_id, first_name, last_name, email, birthday" +
     " FROM tonight.users";
     
 var QUERY_HANG =
@@ -69,6 +69,11 @@ var CHECK_USER =
 var HANG_LIST =
     "SELECT name" +
     " FROM tonight.hangs";
+
+//Temp check
+router.post('/newhang', function(req, res) {
+    console.log(req.body);
+});
 
 //Get friends
 router.get('/friends', function(req, res) {
