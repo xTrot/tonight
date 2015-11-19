@@ -27,7 +27,7 @@ var USER_LOGIN =
     " WHERE email=$1";
 
 var QUERY_FRIENDS =
-    "SELECT first_name, last_name, email, birthday" +
+    "SELECT user_id, first_name, last_name, email, birthday" +
     " FROM tonight.users";
     
 var QUERY_HANG =
@@ -78,6 +78,11 @@ var GET_FEED =
             "select friend as user_id from tonight.befriend " + 
             "where user_i=$1 union select $1 as user_id) as nj) " +
     "as posted order by datetime desc ";
+
+//Temp check
+router.post('/newhang', function(req, res) {
+    console.log(req.body);
+});
 
 //Get friends
 router.get('/friends', function(req, res) {
