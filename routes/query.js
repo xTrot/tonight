@@ -65,6 +65,10 @@ var QUERY_POST =
 var CHECK_USER =
     "SELECT user_id FROM tonight.users" +
     " WHERE email=$1";
+    
+var HANG_LIST =
+    "SELECT name" +
+    " FROM tonight.hangs";
 
 //Get friends
 router.get('/friends', function(req, res) {
@@ -183,9 +187,48 @@ function sendQuery(res, QUERY) {
     });
 }
 
-//Get hang
+//Get an individual hang
 router.get('/hang', function(req, res) {
     sendQuery(res, QUERY_HANG);
+});
+
+
+
+function sendQuery(res, QUERY) {
+    
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(QUERY);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+            console.log(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
+}
+
+//Get a list of hangs
+router.get('/hangs', function(req, res) {
+    sendQuery(res, HANG_LIST);
 });
 
 

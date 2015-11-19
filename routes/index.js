@@ -96,4 +96,9 @@ router.get('/businesses', function(req, res, next){
   res.render('pages/business', {title: "tonight", ngapp:"businessApp"});
 });
 
+/*Get hanglist page */
+router.get('/hangs', function(req, res, next){
+  res.render('pages/hanglist', {title: "tonight", ngapp:"hangsApp"});
+});
+
 module.exports = router;
