@@ -23,7 +23,7 @@ block content
   .col-sm-6.col-sm-offset-3(ng-controller="podsController as feed")
     .well.well-sm
       post-pod
-    .well.well-sm(ng-repeat="pod in feed.pods" ng-show="{{pod.visibility}}")
+    .well.well-sm(ng-repeat="pod in feed.pods")
       pod-header
       pod-content
   

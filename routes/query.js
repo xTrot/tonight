@@ -69,6 +69,15 @@ var CHECK_USER =
 var HANG_LIST =
     "SELECT name" +
     " FROM tonight.hangs";
+    
+var GET_FEED =
+    "select user_id, concat(first_name,' ',last_name) as author, datetime, type, text " +
+    "from tonight.users natural join( " +
+        "select text, type, datetime, user_id " +
+        "from tonight.posts natural join ( " +
+            "select friend as user_id from tonight.befriend " + 
+            "where user_i=$1 union select $1 as user_id) as nj) " +
+    "as posted order by datetime desc ";
 
 //Get friends
 router.get('/friends', function(req, res) {
@@ -114,7 +123,40 @@ router.get('/groups', function(req, res) {
     sendQuery(res, QUERY_GROUPS);
 });
 
+router.get('/feed', function name(req,res) {
+    var result = [];
+    
+    console.log("Get feed for: "+req.session.user_id);
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+        console.log("Got to error.");
 
+        // SQL Query > Select Data
+        var query = client.query(GET_FEED,[req.session.user_id]);
+        console.log("Set the query.");
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            console.log("Got row: "+ row);
+            result.push(row);
+            console.log(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
+});
 
 function sendQuery(res, QUERY) {
     
