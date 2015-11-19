@@ -5,12 +5,18 @@ nav.navbar.navbar-inverse.navbar-fixed-top
 				span.icon-bar
 				span.icon-bar
 				span.icon-bar
-			a.navbar-brand(href="#")= title
+			a.navbar-brand(href="/")= title
 		.collapse.navbar-collapse(id="myNavBar")
 			ul.nav.navbar-nav
-				li.active
-					a(href="#")
+				li
+					a(href="/")
 						| Home
+			ul.nav.navbar-nav
+				block nav_buttons
+			ul.nav.navbar-nav.pull-right
+				li
+					a(href="/query/logout")
+						| Log Out
 div(height='38px')
 	h2
 		| &nbsp;
