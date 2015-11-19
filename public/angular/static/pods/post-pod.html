@@ -14,40 +14,12 @@
 </div>
 <div class="tab-content">
 	<div id="menu1" class="tab-pane fade in active">
-      <form role="form">
+      <form role="form" action="/hanginf">
           <div class="form-group">
               <label for="name">Hang Name:</label>
-              <input type="text" class="form-control" id="name" placeholder="Coffe at friends.">
+              <input type="text" class="form-control" name="hangname" placeholder="Coffe at friends.">
               <label for="time">Time:</label>
-              <select type="text" class="form-control" id="time" value="7PM">
-                  <option>1PM</option>
-                  <option>2PM</option>
-                  <option>3PM</option>
-                  <option>4PM</option>
-                  <option>5PM</option>
-                  <option>6PM</option>
-                  
-                  <option>7PM</option>
-                  <option>8PM</option>
-                  <option>9PM</option>
-                  <option>10PM</option>
-                  <option>11PM</option>
-                  <option>12PM</option>
-                  
-                  <option>1AM</option>
-                  <option>2AM</option>
-                  <option>3AM</option>
-                  <option>4AM</option>
-                  <option>5AM</option>
-                  <option>6AM</option>
-                  
-                  <option>7AM</option>
-                  <option>8AM</option>
-                  <option>9AM</option>
-                  <option>10AM</option>
-                  <option>11AM</option>
-                  <option>12AM</option>
-              </select>
+              <input placeholder="Time of Hang" type="time" class="form-control" name="time" value="19:00">
           </div>
           <button type="submit" class="btn btn-default">Invite Friends</button>
       </form>
