@@ -67,7 +67,6 @@ var QUERY_POST =
 var CHECK_USER =
     "SELECT user_id FROM tonight.users" +
     " WHERE email=$1";
-<<<<<<< HEAD
 
 
 var DELETE_HANG =
@@ -81,7 +80,7 @@ router.get('/friends', function(req, res) {
     sendQuery(res, QUERY_FRIENDS);
 });
 
-=======
+
     
 var HANG_LIST =
     "SELECT name" +
@@ -95,7 +94,6 @@ var GET_FEED =
             "select friend as user_id from tonight.befriend " + 
             "where user_i=$1 union select $1 as user_id) as nj) " +
     "as posted order by datetime desc ";
->>>>>>> 794a52938f14f236d2aed78622adcf0f55497712
 
 function sendQuery(res, QUERY) {
     
@@ -213,6 +211,8 @@ router.post('/newhang', function (req, res) {
             console.log(err);
             return res.status(500).json({success: false, data: err});
         }
+
+        console.log("\n\n***"+"["+data.invited+"]");
         // SQL Query > Insert Data
         client.query(NEW_HANG, [data.invited,data.host, data.name,
             data.date,data.time,data.place]);     
@@ -419,7 +419,7 @@ router.get('/logout', function(req,res){
 });
 
 //Delete Hang
-/*router.delete('/deleteHang:hang_id?', function(req,res){
+router.delete('/deleteHang:hang_id?', function(req,res){
     var hang_id=req.query.hang_id;
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
@@ -438,7 +438,7 @@ router.get('/logout', function(req,res){
 
 
     return;
-});*/
+});
 
 
 
