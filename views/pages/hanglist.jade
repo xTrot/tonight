@@ -1,0 +1,11 @@
+extends ../layout
+
+block headScripts
+	script(src="/angular/controllers/hangsController.js")
+	script(src="/angular/directives/hangsContent.js")
+
+block content
+	div(data-role=content ng-controller="hangsController as hl")
+		.list-group
+			a(href="#" class="list-group-item" ng-repeat="h in hl.list")
+				hangs-content

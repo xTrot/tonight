@@ -77,8 +77,8 @@ router.get('/profile', function(req, res, next) {
 });
 
 /*GET hangInfo page */
-router.get('/hanginf:hangname?', function(req, res, next) {
-  res.render('pages/hanginfo', {title: "Tonight",hangname: req.query.hangname ,ngapp:"registerApp"});
+router.get('/hanginf?', function(req, res, next) {
+  res.render('pages/hanginfo', {title: "Tonight",hangname: req.query.hangname,time: req.query.time,ngapp:"hang-friendsApp"});
 });
 
 /*Get groupinfo page */
@@ -94,6 +94,11 @@ router.get('/businessinf', function(req, res, next) {
 /*Get business page */
 router.get('/businesses', function(req, res, next){
   res.render('pages/business', {title: "tonight", ngapp:"businessApp"});
+});
+
+/*Get hanglist page */
+router.get('/hangs', function(req, res, next){
+  res.render('pages/hanglist', {title: "tonight", ngapp:"hangsApp"});
 });
 
 module.exports = router;

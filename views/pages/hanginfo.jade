@@ -3,6 +3,8 @@ extends ../layout
 block headScripts
   script(src="/angular/index.js")
   script(src="/stylesheets/color.css")
+  script(src="/angular/controllers/hangfriendsController.js")
+  script(src="/angular/directives/hangfriendsContent.js")
 
 block content
   .container-fluid
@@ -12,21 +14,23 @@ block content
           div(class="panel-heading")
             h3(class="panel-title") Information on the Hang
           div(class="panel-body")
-            form(name="form" role="form" method="post" novalidation)
+            form(name="form" role="form" method="post" id="form" novalidation action="query/newhang")
+              input(class="btn btn-lg btn-info pull-right" type="Submit" value="Create Hang" for="form")
               .fieldset
                 div(class="form-group")
                   p Name of the Hang
+                  br
                   input(class="form-control" value="#{hangname}" type="text" name="name" required)
                 div(class="form-group")
                   p Time of the Hang
-                  input(class="form-control" placeholder="Time of Hang" type="time" name="time" required)
+                  input(class="form-control" placeholder="Time of Hang" type="time" name="time" value="#{time}" required)
                 div(class="form-group")
+                  p Location of Hang
                   input(class="form-control" placeholder="Location of Hang" type="text" name="place" required)
-                div(class="form-group") Privacy
-                  div(class="radio" required)
-                    input(class="col-xs-2" type="radio" name="radioChoice" id="everyone")
-                    label(for="everyone") Everyone
-                  div(class="radio")
-                    input(class="col-xs-2" type="radio" name="radioChoice" id="friends")
-                    label(for="friends") Only Friends
-                input(class="btn btn-lg btn-info" type="Submit" value="Create Hang")
+                div(ng-controller="hang-friendsController as fc") FRIENDS
+                  p Select All   
+                    input(type="checkbox" ng-model="SelectAll")
+                  .list-group
+                      a(href="#" class="list-group-item" ng-repeat="f in fc.friends")
+                        hangfriends-content
+                  

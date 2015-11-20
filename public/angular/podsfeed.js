@@ -4,7 +4,7 @@
   app.controller('podsController', ['$http',function($http){
     var feed = this;
     feed.pods = [];
-    $http.get('/jsondata/posts.json').success(function (data) {
+    $http.get('/query/feed').success(function (data) {
 		  feed.pods=data;
 	  });
   }]);

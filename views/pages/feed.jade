@@ -9,11 +9,21 @@ block headScripts
     |   margin: 0 !important;
     | }
 
+block nav_buttons
+  li.active
+    a(href="/feed") Feed
+  li
+    a(href="/hangs") Hangs
+  li
+    a(href="/friends") Friends
+  li
+    a(href="/myprofile") My Profile
+
 block content
   .col-sm-6.col-sm-offset-3(ng-controller="podsController as feed")
     .well.well-sm
       post-pod
-    .well.well-sm(ng-repeat="pod in feed.pods" ng-show="{{pod.visibility}}")
+    .well.well-sm(ng-repeat="pod in feed.pods")
       pod-header
       pod-content
   
