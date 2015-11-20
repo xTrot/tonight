@@ -241,13 +241,10 @@ router.post('/newhang', function (req, res) {
             console.log(err);
             return res.status(500).json({success: false, data: err});
         }
-<<<<<<< HEAD
         console.log(NEW_HANG,[data.invited,data.user_id, data.name,
             data.date,data.time,data.place]);
-=======
 
         console.log("\n\n***"+"["+data.invited+"]");
->>>>>>> 58a12c25cd21d677207502fddf199afaf750caca
         // SQL Query > Insert Data
         client.query(NEW_HANG, [data.invited,data.user_id, data.name,
             data.date,data.time,data.place]);     
