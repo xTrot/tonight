@@ -17,7 +17,7 @@ var uploadThumb = upload()
 
 var connectionString = require(path.join(__dirname, '../', 'config'));
 
-var NEW_HANG = "select tonight.hang(array[$1]::integer[],null::integer[],$2::integer," +
+var NEW_HANG = "select tonight.hang($1::integer[],null::integer[],$2::integer," +
                     "$3::text,$4::date,$5::time,$6::text,true)";
 
 var USER_EXISTS = 
@@ -29,8 +29,11 @@ var USER_LOGIN =
     " WHERE email=$1";
 
 var QUERY_FRIENDS =
-    "SELECT user_id, first_name, last_name, email, birthday" +
-    " FROM tonight.users";
+    "SELECT user_id, first_name, last_name, email, birthday " +
+    "FROM tonight.users natural join( " +
+        "select friend as user_id from tonight.befriend " +
+        "where user_i=$1" +
+    ") as myfriends";
     
 var QUERY_HANG =
     "SELECT name" +
@@ -73,7 +76,8 @@ var HANG_LIST =
     " FROM tonight.hangs";
     
 var GET_FEED =
-    "select user_id, concat(first_name,' ',last_name) as author, datetime, type, text " +
+    "select user_id, concat(first_name,' ',last_name) as author, "+
+    "datetime::date as date, datetime::time as time, thumb, type, text " +
     "from tonight.users natural join( " +
         "select text, type, datetime, user_id " +
         "from tonight.posts natural join ( " +
@@ -142,14 +146,9 @@ router.get('/feed', function name(req,res) {
     });
 });
 
-//Get friends
-router.get('/friends', function(req, res) {
-    sendQuery(res, QUERY_FRIENDS);
-});
-
 //Get groups
 router.get('/groups', function(req, res) {
-    sendQuery(res, QUERY_GROUPS);
+    sendQuery(res,QUERY_GROUPS);
 });
 
 
@@ -168,6 +167,37 @@ router.get('/hangs', function(req, res) {
     sendQuery(res, HANG_LIST);
 });
 
+//Get friends
+router.get('/friends', function(req, res) {
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(QUERY_FRIENDS,[req.session.user_id]);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
+});
+
 router.post('/newhang', function (req, res) {
     
     console.log(req.body);
@@ -175,11 +205,11 @@ router.post('/newhang', function (req, res) {
     var today = date.getMonth()+1+"/"+date.getDate()+"/"+date.getFullYear();
     var invited = [];
     invited.push(req.body.invited);
-    var invited_string = invited.join(",");
+    var invited_string = "{"+invited.join(",")+"}";
     
     // Grab data from http request
     var data = {
-        host: req.session.user_id,
+        user_id: req.session.user_id,
         name: req.body.name,
         invited: invited_string,
         place: req.body.place,
@@ -197,8 +227,10 @@ router.post('/newhang', function (req, res) {
             console.log(err);
             return res.status(500).json({success: false, data: err});
         }
+        console.log(NEW_HANG,[data.invited,data.user_id, data.name,
+            data.date,data.time,data.place]);
         // SQL Query > Insert Data
-        client.query(NEW_HANG, [data.invited,data.host, data.name,
+        client.query(NEW_HANG, [data.invited,data.user_id, data.name,
             data.date,data.time,data.place]);     
         res.redirect('/hangs');
 
