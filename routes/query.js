@@ -31,7 +31,7 @@ var QUERY_FRIENDS =
     " FROM tonight.users";
     
 var QUERY_HANG =
-    "SELECT name" +
+    "SELECT hang_id, name" +
     " FROM tonight.hangs";
 
 var NEW_USER =
@@ -66,11 +66,17 @@ var CHECK_USER =
     "SELECT user_id FROM tonight.users" +
     " WHERE email=$1";
 
+
+var DELETE_HANG =
+    "DELETE FROM tonight.hangs" +
+    " WHERE hang_id=$1";
+
+
+
 //Get friends
 router.get('/friends', function(req, res) {
     sendQuery(res, QUERY_FRIENDS);
 });
-
 
 
 function sendQuery(res, QUERY) {
@@ -418,6 +424,32 @@ router.get('/logout', function(req,res){
     delete req.session.user_id;
     res.redirect('/');
 });
+
+//Delete Hang
+router.delete('/deleteHang:hang_id?', function(req,res){
+    var hang_id=req.query.hang_id;
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+        // SQL Query > Delete Data
+        client.query(DELETE_HANG, [hang_id]);
+
+
+    });
+
+
+    return;
+});
+
+
+
+
 
 
 
