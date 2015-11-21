@@ -56,7 +56,7 @@ var GET_USER_ID =
     " WHERE email=$1 AND password=$2";
     
 var QUERY_GROUPS =
-    "SELECT name" +
+    "SELECT name, thumb" +
     " FROM tonight.groups";
     
 var QUERY_BUSINESS =
