@@ -1,0 +1,13 @@
+extends ../layout
+
+block headScripts
+  script(src="/angular/index.js")
+  script(src="/stylesheets/color.css")
+  script(scr="/angular/controllers/searchController.js")
+  script(scr="/angular/directives/searchContent.js")
+  
+block content
+  div(ng-controller="searchController as sc")
+    h2 Showing search results for "#{search}"
+      div(ng-repeat="c in sc.list")
+        search-content
