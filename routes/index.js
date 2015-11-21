@@ -101,4 +101,9 @@ router.get('/hangs', function(req, res, next){
   res.render('pages/hanglist', {title: "tonight", ngapp:"hangsApp"});
 });
 
+//Get search result page
+router.get('/searchresults?', function(req, res, next) {
+  res.render('pages/searchresult', {title: "Tonight",search: req.query.search ,ngapp:"searchApp"});
+});
+
 module.exports = router;
