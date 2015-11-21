@@ -1,5 +1,15 @@
 extends ../layout
 
+block nav_buttons
+  li
+    a(href="/feed") Feed
+  li
+    a(href="/hangs") Hangs
+  li.active
+    a(href="/friends") Friends
+  li
+    a(href="/profile") My Profile
+
 block headScripts
 	script(src="/angular/controllers/hangsController.js")
 	script(src="/angular/directives/hangsContent.js")
