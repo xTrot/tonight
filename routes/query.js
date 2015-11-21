@@ -77,6 +77,10 @@ var DELETE_HANG =
     " WHERE hang_id=$1";
 
 
+var QUERY_SEARCH =
+    "SELECT first_name, last_name" +
+    " FROM tonight.users WHERE CONCAT(first_name,' ',last_name)" +
+    " LIKE '%Vic%'";
 
 //Get friends
 router.get('/friends', function(req, res) {
@@ -179,6 +183,12 @@ router.get('/hang', function(req, res) {
 //Get a list of hangs
 router.get('/hangs', function(req, res) {
     sendQuery(res, HANG_LIST);
+});
+
+//Get search results
+router.get('/search?', function(req, res) {
+    console.log(req.query);
+    sendQuery(res, QUERY_SEARCH);
 });
 
 //Get friends
