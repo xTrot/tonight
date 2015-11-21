@@ -75,8 +75,6 @@ var CHECK_USER =
 var DELETE_HANG =
     "DELETE FROM tonight.hangs" +
     " WHERE hang_id=$1";
-<<<<<<< HEAD
-
 
 var QUERY_SEARCH =
     "SELECT first_name, last_name" +
@@ -87,10 +85,6 @@ var QUERY_SEARCH =
 router.get('/friends', function(req, res) {
     sendQuery(res, QUERY_FRIENDS);
 });
-
-
-=======
->>>>>>> 862340c4a16b42e8785f202c526077134aa77292
     
 var HANG_LIST =
     "SELECT name, thumb " +
