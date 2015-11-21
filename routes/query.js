@@ -80,11 +80,6 @@ var QUERY_SEARCH =
     "SELECT first_name, last_name" +
     " FROM tonight.users WHERE CONCAT(first_name,' ',last_name)" +
     " LIKE '%Vic%'";
-
-//Get friends
-router.get('/friends', function(req, res) {
-    sendQuery(res, QUERY_FRIENDS);
-});
     
 var HANG_LIST =
     "SELECT name, thumb " +
