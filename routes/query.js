@@ -17,6 +17,8 @@ var uploadThumb = upload()
 
 var connectionString = require(path.join(__dirname, '../', 'config'));
 
+var NEW_HANG = "select tonight.hang($1::integer[],null::integer[],$2::integer," +
+                    "$3::text,$4::date,$5::time,$6::text,true)";
 
 var USER_EXISTS = 
     "SELECT user_id FROM tonight.users"+
@@ -27,11 +29,14 @@ var USER_LOGIN =
     " WHERE email=$1";
 
 var QUERY_FRIENDS =
-    "SELECT user_id, first_name, last_name, email, birthday" +
-    " FROM tonight.users";
+    "SELECT user_id, first_name, last_name, email, birthday " +
+    "FROM tonight.users natural join( " +
+        "select friend as user_id from tonight.befriend " +
+        "where user_i=$1" +
+    ") as myfriends";
     
 var QUERY_HANG =
-    "SELECT name" +
+    "SELECT hang_id, name" +
     " FROM tonight.hangs";
 
 var NEW_USER =
@@ -65,24 +70,13 @@ var QUERY_POST =
 var CHECK_USER =
     "SELECT user_id FROM tonight.users" +
     " WHERE email=$1";
-    
-var HANG_LIST =
-    "SELECT name" +
-    " FROM tonight.hangs";
-    
-var GET_FEED =
-    "select user_id, concat(first_name,' ',last_name) as author, datetime, type, text " +
-    "from tonight.users natural join( " +
-        "select text, type, datetime, user_id " +
-        "from tonight.posts natural join ( " +
-            "select friend as user_id from tonight.befriend " + 
-            "where user_i=$1 union select $1 as user_id) as nj) " +
-    "as posted order by datetime desc ";
 
-//Temp check
-router.post('/newhang', function(req, res) {
-    console.log(req.body);
-});
+
+var DELETE_HANG =
+    "DELETE FROM tonight.hangs" +
+    " WHERE hang_id=$1";
+
+
 
 //Get friends
 router.get('/friends', function(req, res) {
@@ -90,6 +84,20 @@ router.get('/friends', function(req, res) {
 });
 
 
+    
+var HANG_LIST =
+    "SELECT name" +
+    " FROM tonight.hangs";
+    
+var GET_FEED =
+    "select user_id, concat(first_name,' ',last_name) as author, "+
+    "datetime::date as date, datetime::time as time, thumb, type, text " +
+    "from tonight.users natural join( " +
+        "select text, type, datetime, user_id " +
+        "from tonight.posts natural join ( " +
+            "select friend as user_id from tonight.befriend " + 
+            "where user_i=$1 union select $1 as user_id) as nj) " +
+    "as posted order by datetime desc ";
 
 function sendQuery(res, QUERY) {
     
@@ -111,7 +119,6 @@ function sendQuery(res, QUERY) {
         // Stream results back one row at a time
         query.on('row', function(row) {
             result.push(row);
-            console.log(row);
         });
 
         // After all data is returned, close connection and return results
@@ -123,15 +130,8 @@ function sendQuery(res, QUERY) {
     });
 }
 
-//Get groups
-router.get('/groups', function(req, res) {
-    sendQuery(res, QUERY_GROUPS);
-});
-
 router.get('/feed', function name(req,res) {
     var result = [];
-    
-    console.log("Get feed for: "+req.session.user_id);
     
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
@@ -142,16 +142,13 @@ router.get('/feed', function name(req,res) {
             console.log(err);
             return res.status(500).json({ success: false, data: err});
         }
-        console.log("Got to error.");
 
         // SQL Query > Select Data
         var query = client.query(GET_FEED,[req.session.user_id]);
         console.log("Set the query.");
         // Stream results back one row at a time
         query.on('row', function(row) {
-            console.log("Got row: "+ row);
             result.push(row);
-            console.log(row);
         });
 
         // After all data is returned, close connection and return results
@@ -163,125 +160,29 @@ router.get('/feed', function name(req,res) {
     });
 });
 
-function sendQuery(res, QUERY) {
-    
-    var result = [];
-    
-    // Get a Postgres client from the connection pool
-    pg.connect(connectionString, function(err, client, done) {
-        // Handle connection errors
-        //console.log("\n\n** 1");
-        if(err) {
-            done();
-            console.log(err);
-            return res.status(500).json({ success: false, data: err});
-        }
+//Get groups
+router.get('/groups', function(req, res) {
+    sendQuery(res,QUERY_GROUPS);
+});
 
-
-        // SQL Query > Select Data
-        var query = client.query(QUERY);
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            result.push(row);
-            console.log(row);
-        });
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            done();
-            return res.json(result);
-        });
-
-    });
-}
 
 //Get business
 router.get('/business', function(req, res) {
     sendQuery(res, QUERY_BUSINESS);
 });
 
-
-
-function sendQuery(res, QUERY) {
-    
-    var result = [];
-    
-    // Get a Postgres client from the connection pool
-    pg.connect(connectionString, function(err, client, done) {
-        // Handle connection errors
-        //console.log("\n\n** 1");
-        if(err) {
-            done();
-            console.log(err);
-            return res.status(500).json({ success: false, data: err});
-        }
-
-
-        // SQL Query > Select Data
-        var query = client.query(QUERY);
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            result.push(row);
-            console.log(row);
-        });
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            done();
-            return res.json(result);
-        });
-
-    });
-}
-
 //Get an individual hang
 router.get('/hang', function(req, res) {
     sendQuery(res, QUERY_HANG);
 });
-
-
-
-function sendQuery(res, QUERY) {
-    
-    var result = [];
-    
-    // Get a Postgres client from the connection pool
-    pg.connect(connectionString, function(err, client, done) {
-        // Handle connection errors
-        //console.log("\n\n** 1");
-        if(err) {
-            done();
-            console.log(err);
-            return res.status(500).json({ success: false, data: err});
-        }
-
-
-        // SQL Query > Select Data
-        var query = client.query(QUERY);
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            result.push(row);
-            console.log(row);
-        });
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            done();
-            return res.json(result);
-        });
-
-    });
-}
 
 //Get a list of hangs
 router.get('/hangs', function(req, res) {
     sendQuery(res, HANG_LIST);
 });
 
-
-
-function sendQuery(res, QUERY) {
-    
+//Get friends
+router.get('/friends', function(req, res) {
     var result = [];
     
     // Get a Postgres client from the connection pool
@@ -296,11 +197,10 @@ function sendQuery(res, QUERY) {
 
 
         // SQL Query > Select Data
-        var query = client.query(QUERY);
+        var query = client.query(QUERY_FRIENDS,[req.session.user_id]);
         // Stream results back one row at a time
         query.on('row', function(row) {
             result.push(row);
-            console.log(row);
         });
 
         // After all data is returned, close connection and return results
@@ -310,7 +210,48 @@ function sendQuery(res, QUERY) {
         });
 
     });
-}
+});
+
+router.post('/newhang', function (req, res) {
+    
+    console.log(req.body);
+    var date = new Date();
+    var today = date.getMonth()+1+"/"+date.getDate()+"/"+date.getFullYear();
+    var invited = [];
+    invited.push(req.body.invited);
+    var invited_string = "{"+invited.join(",")+"}";
+    
+    // Grab data from http request
+    var data = {
+        user_id: req.session.user_id,
+        name: req.body.name,
+        invited: invited_string,
+        place: req.body.place,
+        time: req.body.time,
+        date:today
+    };
+    
+    console.log(data);
+
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+        console.log(NEW_HANG,[data.invited,data.user_id, data.name,
+            data.date,data.time,data.place]);
+
+        console.log("\n\n***"+"["+data.invited+"]");
+        // SQL Query > Insert Data
+        client.query(NEW_HANG, [data.invited,data.user_id, data.name,
+            data.date,data.time,data.place]);     
+        res.redirect('/hangs');
+
+    });
+});
 
 //Registration
 router.post('/register', function(req, res) {
@@ -508,6 +449,32 @@ router.get('/logout', function(req,res){
     delete req.session.user_id;
     res.redirect('/');
 });
+
+//Delete Hang
+router.delete('/deleteHang:hang_id?', function(req,res){
+    var hang_id=req.query.hang_id;
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+        // SQL Query > Delete Data
+        client.query(DELETE_HANG, [hang_id]);
+
+
+    });
+
+
+    return;
+});
+
+
+
+
 
 
 

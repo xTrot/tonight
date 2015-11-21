@@ -23,8 +23,9 @@ block content
                   input(class="form-control" value="#{hangname}" type="text" name="name" required)
                 div(class="form-group")
                   p Time of the Hang
-                  input(class="form-control" placeholder="Time of Hang" type="time" name="time" required)
+                  input(class="form-control" placeholder="Time of Hang" type="time" name="time" value="#{time}" required)
                 div(class="form-group")
+                  p Location of Hang
                   input(class="form-control" placeholder="Location of Hang" type="text" name="place" required)
                 div(ng-controller="hang-friendsController as fc") FRIENDS
                   p Select All   
