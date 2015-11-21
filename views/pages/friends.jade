@@ -1,8 +1,8 @@
 extends ../layout
 
 block headScripts
-	script(src="/angular/controllers/friendsController.js")
-	script(src="/angular/directives/friendsContent.js")
+  script(src="/angular/controllers/friendsController.js")
+  script(src="/angular/directives/friendsContent.js")
 
 block nav_buttons
   li
@@ -12,10 +12,10 @@ block nav_buttons
   li.active
     a(href="/friends") Friends
   li
-    a(href="/myprofile") My Profile
+    a(href="/profile") My Profile
 
 block content
-	div(data-role=content ng-controller="friendsController as fc")
-		.list-group
-			a(href="#" class="list-group-item" ng-repeat="f in fc.friends")
-				friends-content
+  div(data-role=content ng-controller="friendsController as fc")
+    .list-group
+      a(href="#" class="list-group-item" ng-repeat="f in fc.friends")
+        friends-content

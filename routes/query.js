@@ -56,7 +56,7 @@ var GET_USER_ID =
     " WHERE email=$1 AND password=$2";
     
 var QUERY_GROUPS =
-    "SELECT name" +
+    "SELECT name, thumb" +
     " FROM tonight.groups";
     
 var QUERY_BUSINESS =
@@ -75,6 +75,7 @@ var CHECK_USER =
 var DELETE_HANG =
     "DELETE FROM tonight.hangs" +
     " WHERE hang_id=$1";
+<<<<<<< HEAD
 
 
 var QUERY_SEARCH =
@@ -88,10 +89,18 @@ router.get('/friends', function(req, res) {
 });
 
 
+=======
+>>>>>>> 862340c4a16b42e8785f202c526077134aa77292
     
 var HANG_LIST =
-    "SELECT name" +
-    " FROM tonight.hangs";
+    "SELECT name, thumb " +
+    "FROM tonight.hangs natural join( " +
+        "select name from tonight.hangs " +
+        "where user_i=$1 union (select name from " +
+          "tonight.hangs natural join( select hang_id " +
+            "from tonight.hang_invites_users where user_id=$1 " +
+          ") as invitedhangs) " +
+    ") as myhangs";
     
 var GET_FEED =
     "select user_id, concat(first_name,' ',last_name) as author, "+
@@ -182,7 +191,32 @@ router.get('/hang', function(req, res) {
 
 //Get a list of hangs
 router.get('/hangs', function(req, res) {
-    sendQuery(res, HANG_LIST);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(HANG_LIST,[req.session.user_id]);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+    });
 });
 
 //Get search results
