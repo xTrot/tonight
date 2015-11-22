@@ -288,6 +288,7 @@ router.get('/friends', function(req, res) {
 });
 
 router.post('/newhang', function (req, res) {
+    var emailList=[];
     
     console.log(req.body);
     var date = new Date();
@@ -306,8 +307,6 @@ router.post('/newhang', function (req, res) {
         date:today
     };
     
-    console.log(data);
-
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
         // Handle connection errors
@@ -319,11 +318,22 @@ router.post('/newhang', function (req, res) {
         console.log(NEW_HANG,[data.invited,data.user_id, data.name,
             data.date,data.time,data.place]);
 
-        console.log("\n\n***"+"["+data.invited+"]");
         // SQL Query > Insert Data
-        client.query(NEW_HANG, [data.invited,data.user_id, data.name,
+        var query = client.query(NEW_HANG, [data.invited,data.user_id, data.name,
             data.date,data.time,data.place]);     
-        res.redirect('/hangs');
+        
+         query.on('row', function(row) {
+            emailList.push(row.hang);
+        });
+        
+        
+         query.on('end', function() {
+            done();
+            console.log("Mailed Hang Notification to:\n" + emailList);
+            sendNotification(emailList,'hang');
+            res.redirect('/hangs');
+        });
+        
 
     });
 });
@@ -526,7 +536,7 @@ router.get('/logout', function(req,res){
 });
 
 //Delete Hang
-router.delete('/deleteHang:hang_id?', function(req,res){
+router.delete('/deleteHang?', function(req,res){
     var hang_id=req.query.hang_id;
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
