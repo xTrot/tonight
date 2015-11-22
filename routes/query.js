@@ -1,6 +1,7 @@
 var express = require('express');
 var upload = require('express-upload');
 var gm = require('gm');
+var sg = require('sendgrid')("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");
 var router = express.Router();
 
 var path = require('path');
@@ -100,6 +101,32 @@ var GET_FEED =
             "select friend as user_id from tonight.befriend " + 
             "where user_i=$1 union select $1 as user_id) as nj) " +
     "as posted order by datetime desc ";
+
+function sendNotification(emails,ofType) {
+    
+    var sendText;
+    
+    switch(ofType){
+        case('hang'): sendText = "You have been invited to a new hang."; break;
+        case('friendRequest'): sendText = "You have recieved a new friend request."; break;
+        default: return false;
+    };
+    
+    var email     = new sg.Email({
+        to: emails,
+        from: 'no-reply@tonight-social.herokuapp.com',
+        subject: 'Notification - Tonight',
+        text: sendText
+    });
+    
+    sg.send(email, function(err, json) {
+        if (err) { return console.error(err); }
+        console.log(json);
+    });
+    
+    return true;
+    
+}
 
 function sendQuery(res, QUERY) {
     
