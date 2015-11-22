@@ -81,7 +81,7 @@ var QUERY_SEARCH =
     " FROM tonight.users WHERE CONCAT(first_name,' ',last_name)" +
     " LIKE '%Vic%'";
     
-var HANG_LIST =
+/*var HANG_LIST =
     "SELECT name, thumb " +
     "FROM tonight.hangs natural join( " +
         "select name from tonight.hangs " +
@@ -89,7 +89,22 @@ var HANG_LIST =
           "tonight.hangs natural join( select hang_id " +
             "from tonight.hang_invites_users where user_id=$1 " +
           ") as invitedhangs) " +
-    ") as myhangs";
+    ") as myhangs";*/
+
+var HANG_LIST =
+    "SELECT name, thumb, datetime_created "+
+        "FROM tonight.hangs "+
+        "WHERE hang_id = ANY("+
+                            "SELECT hang_id "+
+                                "FROM tonight.hang_invites_users "+
+                                "WHERE user_id = $1 "+
+                                "UNION "+
+                                "SELECT hang_id "+
+                                "FROM tonight.hangs "+
+                                "WHERE user_i = $1) "+
+        "ORDER BY datetime_created DESC";
+
+
     
 var GET_FEED =
     "select user_id, concat(first_name,' ',last_name) as author, "+
