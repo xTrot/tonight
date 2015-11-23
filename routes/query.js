@@ -80,7 +80,7 @@ var DELETE_HANG =
 var QUERY_SEARCH =
     "SELECT first_name, last_name" +
     " FROM tonight.users WHERE CONCAT(first_name,' ',last_name)" +
-    " LIKE '%Vic%'";
+    " LIKE ";
     
 /*var HANG_LIST =
     "SELECT name, thumb " +
@@ -252,8 +252,35 @@ router.get('/hangs', function(req, res) {
 
 //Get search results
 router.get('/search?', function(req, res) {
-    console.log(req.query);
-    sendQuery(res, QUERY_SEARCH);
+    console.log(req.query.search);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+       }
+       
+       var searchFor = QUERY_SEARCH + "'%"+req.query.search+"%'";
+       console.log(searchFor);
+
+        // SQL Query > Select Data
+        var query = client.query(searchFor);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+    });
 });
 
 //Get friends
