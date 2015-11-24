@@ -109,13 +109,24 @@ var HANG_LIST =
     
 var GET_FEED =
     "select user_id, concat(first_name,' ',last_name) as author, "+
-    "datetime::date as date, datetime::time as time, thumb, type, text " +
+    "datetime as date, thumb, type, text " +
     "from tonight.users natural join( " +
         "select text, type, datetime, user_id " +
         "from tonight.posts natural join ( " +
             "select friend as user_id from tonight.befriend " + 
             "where user_i=$1 union select $1 as user_id) as nj) " +
     "as posted order by datetime desc ";
+
+
+/*var GET_FEED =
+    "select user_id, concat(first_name,' ',last_name) as author, "+
+    "datetime::date as date, datetime::time as time, thumb, type, text " +
+    "from tonight.users natural join( " +
+    "select text, type, datetime, user_id " +
+    "from tonight.posts natural join ( " +
+    "select friend as user_id from tonight.befriend " +
+    "where user_i=$1 union select $1 as user_id) as nj) " +
+    "as posted order by datetime desc ";*/
 
 function sendNotification(emails,ofType) {
     

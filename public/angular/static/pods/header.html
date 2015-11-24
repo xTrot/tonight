@@ -6,7 +6,7 @@
 		</div>
 		<div class="col-xs-*">
 			<a href="#" class="lead text-left">{{pod.author}}</a><br/>
-			<p class="small text-left">{{pod.date}} at {{pod.time}}</p>
+			<p class="small text-left">{{pod.date | date:'MMM dd, h:mm a': '+0004'}}</p>
 		</div>
 	</div>
 </div>
