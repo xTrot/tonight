@@ -9,11 +9,12 @@ nav.navbar.navbar-inverse.navbar-fixed-top
 		.collapse.navbar-collapse(id="myNavBar")
 			ul.nav.navbar-nav
 				li.sidebar-search
-					.input-group.custom-search-form
-						input.form-control(type="text" name="search" placeholder="Search...")
-						span.input-group-btn
-							button.btn.btn-default
-								span.glyphicon.glyphicon-search
+					form(action="/searchresults")
+						.input-group.custom-search-form
+							input.form-control(type="text" name="search" placeholder="Search...")
+							span.input-group-btn
+								button.btn.btn-default
+									span.glyphicon.glyphicon-search
 			ul.nav.navbar-nav
 				block nav_buttons
 			ul.nav.navbar-nav.pull-right

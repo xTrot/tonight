@@ -1,12 +1,17 @@
 (function() {
     var app = angular.module('searchApp', ['search-directive']);
 
-    app.controller('searchController', ['$http',function($http){
+    app.controller('searchController', ['$http','$window',function($http,$window){
+        
         var searchContent = this;
         searchContent.list = {};
+        
+        var searchFor = '/query/search?search='+
+            $window.location.search.split('?')[1].split('=')[1];
 
-        $http.get('/query/search').success(function (data) {
-            console.log("\n\n*** Data: " + data);
+        $http.get(searchFor).success(function (data) {
+            console.log("SearchFor: " + searchFor);
+            console.log("Data: " + data);
             searchContent.list=data;
         });
     }]);
