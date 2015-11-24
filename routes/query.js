@@ -74,60 +74,65 @@ var CHECK_USER =
     " WHERE email=$1";
 
 
-var DELETE_HANG =
-    "DELETE FROM tonight.hangs" +
-    " WHERE hang_id=$1";
-
 var QUERY_SEARCH =
     "SELECT first_name, last_name, thumb" +
     " FROM tonight.users WHERE CONCAT(first_name,' ',last_name)" +
     " LIKE ";
-    
-/*var HANG_LIST =
-    "SELECT name, thumb " +
-    "FROM tonight.hangs natural join( " +
-        "select name from tonight.hangs " +
-        "where user_i=$1 union (select name from " +
-          "tonight.hangs natural join( select hang_id " +
-            "from tonight.hang_invites_users where user_id=$1 " +
-          ") as invitedhangs) " +
-    ") as myhangs";*/
 
-var HANG_LIST =
-    "SELECT name, thumb, datetime_created "+
-        "FROM tonight.hangs "+
-        "WHERE hang_id = ANY("+
-                            "SELECT hang_id "+
-                                "FROM tonight.hang_invites_users "+
-                                "WHERE user_id = $1 "+
-                                "UNION "+
-                                "SELECT hang_id "+
-                                "FROM tonight.hangs "+
-                                "WHERE user_i = $1) "+
-        "ORDER BY datetime_created DESC";
-
-
-    
 var GET_FEED =
     "select user_id, concat(first_name,' ',last_name) as author, "+
     "datetime as date, thumb, type, text " +
-    "from tonight.users natural join( " +
-        "select text, type, datetime, user_id " +
-        "from tonight.posts natural join ( " +
-            "select friend as user_id from tonight.befriend " + 
-            "where user_i=$1 union select $1 as user_id) as nj) " +
-    "as posted order by datetime desc ";
-
-
-/*var GET_FEED =
-    "select user_id, concat(first_name,' ',last_name) as author, "+
-    "datetime::date as date, datetime::time as time, thumb, type, text " +
     "from tonight.users natural join( " +
     "select text, type, datetime, user_id " +
     "from tonight.posts natural join ( " +
     "select friend as user_id from tonight.befriend " +
     "where user_i=$1 union select $1 as user_id) as nj) " +
-    "as posted order by datetime desc ";*/
+    "as posted order by datetime desc ";
+
+var HANG_LIST =
+    "SELECT name, thumb, datetime_created "+
+        "FROM tonight.hangs "+
+        "WHERE hang_id = "+
+            "ANY(SELECT hang_id "+
+                "FROM tonight.hang_invites_users "+
+                "WHERE user_id = $1 "+
+                "UNION "+
+                "SELECT hang_id "+
+                "FROM tonight.hangs "+
+                "WHERE user_i = $1) "+
+        "ORDER BY datetime_created DESC";
+
+var GROUP_LIST =
+    "SELECT name, thumb, datetime"+
+    " FROM tonight.groups"+
+    " WHERE group_id = "+
+        "ANY(SELECT group_id "+
+            "FROM tonight.group_invites_users "+
+            "WHERE user_id = 67 "+
+            "UNION "+
+            "SELECT group_id "+
+            "FROM tonight.groups "+
+            "WHERE user_id = 67) "+
+    "ORDER BY datetime DESC";
+
+
+var DELETE_USER = "DELETE FROM tonight.users"+
+                    " WHERE user_id = $1";
+
+var DELETE_GROUP = "DELETE FROM tonight.groups"+
+                    " WHERE groups_id = $1";
+
+var DELETE_POST = "DELETE FROM tonight.posts"+
+                    " WHERE post_id = $1";
+
+var DELETE_HANG = "DELETE FROM tonight.hangs"+
+                    " WHERE hang_id = $1";
+
+var DELETE_BP = "DELETE FROM tonight.business_pages"+
+                    " WHERE page_id = $1";
+
+
+
 
 function sendNotification(emails,ofType) {
     
