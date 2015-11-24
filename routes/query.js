@@ -61,11 +61,11 @@ var GET_USER_ID =
     " WHERE email=$1 AND password=$2";
     
 var QUERY_GROUPS =
-    "SELECT name, thumb" +
+    "SELECT group_id, name, thumb" +
     " FROM tonight.groups";
     
 var QUERY_BUSINESS =
-    "SELECT name" +
+    "SELECT page_id, name, thumb" +
     " FROM tonight.business_pages";
     
 var QUERY_POST =
@@ -254,6 +254,39 @@ router.get('/groups', function(req, res) {
 //Get business
 router.get('/business', function(req, res) {
     sendQuery(res, QUERY_BUSINESS);
+});
+
+//Get business profile 
+router.get('/businessprofile?', function(req, res) {
+    console.log(req.query.b_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+       }
+       
+       var searchFor = QUERY_BUSINESS + " WHERE page_id="+req.query.b_id;
+       console.log(searchFor);
+
+        // SQL Query > Select Data
+        var query = client.query(searchFor);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+    });
 });
 
 //Get an individual hang
