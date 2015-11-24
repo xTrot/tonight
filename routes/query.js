@@ -93,7 +93,7 @@ var GET_FEED =
     "as posted order by datetime desc ";
 
 var HANG_LIST =
-    "SELECT name, thumb, datetime_created "+
+    "SELECT hang_id, name, thumb, datetime_created "+
         "FROM tonight.hangs "+
         "WHERE hang_id = "+
             "ANY(SELECT hang_id "+
@@ -224,13 +224,19 @@ router.get('/feed', function name(req,res) {
     });
 });
 
-//temp GMN query
-router.post('/status', function(req, res) {
-   console.log(req.body.status);
-   console.log(req.session.user_id);
-   console.log("okay");
-   sendQuery(res,"UPDATE tonight.hang_invites_users SET status='"+req.body.status+"' WHERE user_id="+req.session.user_id);
-   console.log("imhere");
+// Set user as Going
+router.post('/hang/going?', function(req, res) {
+   sendQuery(res,"UPDATE tonight.hang_invites_users SET status='going' WHERE hang_id="+req.query.hang_id+" user_id="+req.session.user_id);
+});
+
+// Set user as Maybe
+router.post('/hang/maybe?', function(req, res) {
+   sendQuery(res,"UPDATE tonight.hang_invites_users SET status='maybe' WHERE hang_id="+req.query.hang_id+" user_id="+req.session.user_id);
+});
+
+// Set user as Not Going
+router.post('/hang/not?', function(req, res) {
+   sendQuery(res,"UPDATE tonight.hang_invites_users SET status='not' WHERE hang_id="+req.query.hang_id+" user_id="+req.session.user_id);
 });
 
 //temp profile query
