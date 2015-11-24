@@ -30,8 +30,8 @@ var USER_LOGIN =
     " WHERE email=$1";
 
 var QUERY_FRIENDS =
-    "SELECT user_id, first_name, last_name, email, birthday " +
-    "FROM tonight.users natural join( " +
+    "SELECT user_id, first_name, last_name, email, birthday, thumb" +
+    " FROM tonight.users natural join( " +
         "select friend as user_id from tonight.befriend " +
         "where user_i=$1" +
     ") as myfriends";
@@ -78,7 +78,7 @@ var DELETE_HANG =
     " WHERE hang_id=$1";
 
 var QUERY_SEARCH =
-    "SELECT first_name, last_name" +
+    "SELECT first_name, last_name, thumb" +
     " FROM tonight.users WHERE CONCAT(first_name,' ',last_name)" +
     " LIKE ";
     
