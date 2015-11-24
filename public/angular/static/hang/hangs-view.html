@@ -4,5 +4,10 @@
 </span>
 <div class="col-xs-*">
     <h4>{{h.name}}</h4>
-    <span style="color:dodgerblue">members</span>
+    <div class="col-xs-*"></div>
+        <form role="form" method="post" action="query/status">
+            <input class="btn btn-sm btn-success" type="submit" value="Going" name="status"></input>
+            <input class="btn btn-sm btn-warning" type="submit" value="Maybe" name="status"></input>
+            <input class="btn btn-sm btn-danger" type="submit" value="Not Going" name="not going"></input>
+        </form>
 </div>

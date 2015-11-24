@@ -73,7 +73,7 @@ router.get('/hang', function(req, res, next) {
 
 /*GET MyProfile page */
 router.get('/profile', function(req, res, next) {
-  res.render('pages/myprofile', {title: "Tonight",ngapp:"registerApp"});
+  res.render('pages/myprofile', {title: "Tonight",ngapp:"profileApp"});
 });
 
 /*GET hangInfo page */

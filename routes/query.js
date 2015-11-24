@@ -204,6 +204,19 @@ router.get('/feed', function name(req,res) {
     });
 });
 
+//temp GMN query
+router.post('/status', function(req, res) {
+   console.log(req.body.status);
+   //sendQuery(res,"INSERT INTO tonight.hangs.status VALUES("+req.body.status+") WHERE ..."); 
+});
+
+//temp profile query
+router.get('/profile', function(req, res){
+   console.log("start");
+   sendQuery(res,"SELECT first_name, last_name FROM tonight.users WHERE user_id="+req.session.user_id); 
+   console.log("success");
+});
+
 //Get groups
 router.get('/groups', function(req, res) {
     sendQuery(res,QUERY_GROUPS);

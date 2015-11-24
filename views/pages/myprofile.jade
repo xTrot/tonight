@@ -3,6 +3,7 @@ extends ../layout
 block headScripts
   script(src="/angular/index.js")
   script(src="/stylesheets/color.css")
+  script(src="/angular/controllers/profileController.js")
  
 block nav_buttons
   li
@@ -17,10 +18,13 @@ block nav_buttons
 block content
    .container-fluid
       div(class="well well-lg")
-         img(class="img-rounded img-responsive" src="/images/sample/Victor_thumb.jpg"
+         img(class="img-rounded img-responsive" src="/images/thumbnails/default_thumb.png"
          alt="Victor's Thumbnail." width="500" height="500")
-         div(class="h3 text-center bg-success") Victor E. Lugo Velez
-         
+         div(class="h3 text-center" ng-controller="profileController as profile") {{profile.items[0].first_name}} {{profile.items[0].last_name}}
+         div(class="col-xs-12" ng-show="false")
+            input(class="btn btn-success btn-xs btn-block" type="submit" value="Send Friend Request" name="friendreq")
+         div(class="col-xs-12" ng-show="true")
+            input(class="btn btn-danger btn-xs btn-block" type="submit" value="Unfriend User" name="unfriend")
          // Subsitute with tab code in feed
       div(class="well well-lg")
          ul(class="nav nav-tabs")
