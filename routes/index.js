@@ -106,4 +106,9 @@ router.get('/searchresults?', function(req, res, next) {
   res.render('pages/searchresult', {title: "Tonight",search: req.query.search ,ngapp:"searchApp"});
 });
 
+//Get search result page
+router.get('/businessprofile?', function(req, res, next) {
+  res.render('pages/businessprofile', {title: "Tonight",b_id: req.query.b_id ,ngapp:"businessprofileApp"});
+});
+
 module.exports = router;

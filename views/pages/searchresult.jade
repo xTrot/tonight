@@ -9,5 +9,5 @@ block content
     h3 Showing results for "#{search}"
       div(data-role=content ng-controller="searchController as sc")
         .list-group
-          a(href="#" class="list-group-item" ng-repeat="c in sc.list")
+          a(href="/profile?user={{c.user_id}}" class="list-group-item" ng-repeat="c in sc.list")
             search-content

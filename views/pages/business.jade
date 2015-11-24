@@ -7,5 +7,5 @@ block headScripts
 block content
 	div(data-role=content ng-controller="businessController as bc")
 		.list-group
-			a(href="#" class="list-group-item" ng-repeat="b in bc.business")
+			a(href="/businessprofile?b_id={{b.page_id}}" class="list-group-item" ng-repeat="b in bc.business")
 				business-content

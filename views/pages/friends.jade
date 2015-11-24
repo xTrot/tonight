@@ -17,5 +17,5 @@ block nav_buttons
 block content
   div(data-role=content ng-controller="friendsController as fc")
     .list-group
-      a(href="#" class="list-group-item" ng-repeat="f in fc.friends")
+      a(href="/profile?user={{f.user_id}}" class="list-group-item" ng-repeat="f in fc.friends")
         friends-content
