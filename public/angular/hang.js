@@ -1,11 +1,12 @@
 (function(){
 	var app = angular.module('hang', ['hang-directives']);
 	
-	app.controller('hangController', ['$scope', '$http',function($scope, $http){
+	app.controller('hangController', ['$scope', '$http','$window',function($scope, $http, $window){
 		var hang = this;
 		hang.info = [];
+    var hang_id = $window.location.search.split('?')[1].split('=')[1];
 		
-		$http.get('/query/hang').success(function (data) {
+		$http.get('/query/hang?hang_id='+hang_id).success(function (data) {
 		  //console.log("\n\n*** Data: " + data);
 		  hang.info=data;
 		});
@@ -27,6 +28,21 @@
                 //do nothing
             }
             //console.log(r);
+        };
+        $scope.going = function(){
+           $http.post('/query/hang/going?hang_id='+hang.info[0].hang_id)
+               .success(function (data) {
+            });
+        };
+        $scope.maybe = function(){
+           $http.post('/query/hang/maybe?hang_id='+hang.info[0].hang_id)
+               .success(function (data) {
+            });
+        };
+        $scope.not = function(){
+           $http.post('/query/hang/not?hang_id='+hang.info[0].hang_id)
+               .success(function (data) {
+            });
         };
 
 	}]);
