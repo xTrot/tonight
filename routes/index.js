@@ -106,9 +106,14 @@ router.get('/searchresults?', function(req, res, next) {
   res.render('pages/searchresult', {title: "Tonight",search: req.query.search ,ngapp:"searchApp"});
 });
 
-//Get search result page
+//Get business profile page
 router.get('/businessprofile?', function(req, res, next) {
   res.render('pages/businessprofile', {title: "Tonight",b_id: req.query.b_id ,ngapp:"businessprofileApp"});
+});
+
+//Get group profile page
+router.get('/groupprofile?', function(req, res, next) {
+  res.render('pages/groupprofile', {title: "Tonight",group_id: req.query.group_id ,ngapp:"groupprofileApp"});
 });
 
 module.exports = router;

@@ -250,6 +250,38 @@ router.get('/groups', function(req, res) {
     sendQuery(res,QUERY_GROUPS);
 });
 
+//Get group profile 
+router.get('/groupprofile?', function(req, res) {
+    console.log(req.query.b_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+       }
+       
+       var searchFor = QUERY_GROUPS + " WHERE group_id="+req.query.group_id;
+       console.log(searchFor);
+
+        // SQL Query > Select Data
+        var query = client.query(searchFor);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+    });
+});
 
 //Get business
 router.get('/business', function(req, res) {

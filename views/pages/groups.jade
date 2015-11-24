@@ -7,5 +7,11 @@ block headScripts
 block content
 	div(data-role=content ng-controller="groupsController as gc")
 		.list-group
-			a(href="#" class="list-group-item" ng-repeat="g in gc.groups")
+			h3 Your groups
+			a(href="/groupprofile?group_id={{g.group_id}}" class="list-group-item" ng-repeat="g in gc.groups")
 				groups-content
+	div(data-role=content ng-controller="groupsController as gc")
+		.list-group
+			h3 Groups you belong to 
+			a(href="/groupprofile?group_id={{g.group_id}}" class="list-group-item" ng-repeat="g in gc.belonggroups")
+				belonggroups-content

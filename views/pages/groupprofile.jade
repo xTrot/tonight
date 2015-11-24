@@ -1,0 +1,43 @@
+extends ../layout
+
+block headScripts
+  script(src="/angular/index.js")
+  script(src="/stylesheets/color.css")
+  script(src="/angular/controllers/groupprofileController.js")
+ 
+block nav_buttons
+  li
+    a(href="/feed") Feed
+  li
+    a(href="/hangs") Hangs
+  li
+    a(href="/friends") Friends
+  li.active
+    a(href="/myprofile") My Profile
+
+block content
+   .container-fluid
+      div(class="well well-lg" ng-controller="groupprofileController as group")
+         img(class="img-rounded img-responsive" src="/images/thumbnails/{{group.profile[0].thumb}}"
+         alt="Victor's Thumbnail." width="500" height="500")
+         div(class="h3 text-center") {{group.profile[0].name}}
+         // Subsitute with tab code in feed
+      div(class="well well-lg")
+         ul(class="nav nav-tabs")
+            li(class="col-xs-4 active")
+               a(data-toggle='tab' href='#menu1' class="glyphicon glyphicon-list-alt")
+            li(class="col-xs-4")
+               a(data-toggle='tab' href='#menu2' class="glyphicon glyphicon-camera")
+            li(class="col-xs-4")
+               a(data-toggle='tab' href='#menu3' class="glyphicon glyphicon-facetime-video")
+            div
+               .tab-content
+                  div(id="menu1" class="tab-pane fade-in active")
+                     h3 Posts
+                     p Some content.
+                  div(id="menu2" class="tab-pane fade-in")
+                     h3 Photos
+                     p Some content in menu 1.
+                  div(id="menu3" class="tab-pane fade-in")
+                     h3 Videos
+                     p Some content in menu 2.
