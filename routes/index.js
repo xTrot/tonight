@@ -116,4 +116,9 @@ router.get('/groupprofile?', function(req, res, next) {
   res.render('pages/groupprofile', {title: "Tonight",group_id: req.query.group_id ,ngapp:"groupprofileApp"});
 });
 
+//Get update group page
+router.get('/updategroup?', function(req, res, next) {
+  res.render('updates/groupupdate', {title: "Tonight",group_id: req.query.group_id ,ngapp:"groupupdateApp"});
+});
+
 module.exports = router;

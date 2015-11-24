@@ -229,6 +229,11 @@ router.post('/hang/going?', function(req, res) {
    sendQuery(res,"UPDATE tonight.hang_invites_users SET status='going' WHERE hang_id="+req.query.hang_id+" user_id="+req.session.user_id);
 });
 
+router.post('/updategroup?', function(req, res) {
+   console.log(req.query.group_id)
+   sendQuery(res,"UPDATE tonight.groups SET name='"+req.body.name+"' WHERE group_id="+req.query.group_id+" AND user_id="+req.session.user_id);
+});
+
 // Set user as Maybe
 router.post('/hang/maybe?', function(req, res) {
    sendQuery(res,"UPDATE tonight.hang_invites_users SET status='maybe' WHERE hang_id="+req.query.hang_id+" user_id="+req.session.user_id);
