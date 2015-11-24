@@ -19,8 +19,12 @@ block content
                 a(ng-click="deleteHang()")
                     span(class="glyphicon glyphicon-trash" aria-hidden="true" style="color:white")
                   //a(class="btn btn-danger btn-sm") Delete
-          div(class="panel-body")
+          div(class="panel-body col-xs-*")
             hang-info
+            .btn-group
+              input.btn.btn-success(ng-click="going()" type="submit" value="Going")
+              input.btn.btn-warning(ng-click="maybe()" type="submit" value="Maybe")
+              input.btn.btn-danger(ng-click="not()" type="submit" value="Not")
         div(class="panel panel-success")
           div(class="panel-heading") Going
           div(class="panel-body")

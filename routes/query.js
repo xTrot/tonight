@@ -226,17 +226,20 @@ router.get('/feed', function name(req,res) {
 
 // Set user as Going
 router.post('/hang/going?', function(req, res) {
-   sendQuery(res,"UPDATE tonight.hang_invites_users SET status='going' WHERE hang_id="+req.query.hang_id+" user_id="+req.session.user_id);
+    sendQuery(res,"UPDATE tonight.hang_invites_users SET status='going' " +
+        "WHERE hang_id="+req.query.hang_id+" and user_id="+req.session.user_id);
 });
 
 // Set user as Maybe
 router.post('/hang/maybe?', function(req, res) {
-   sendQuery(res,"UPDATE tonight.hang_invites_users SET status='maybe' WHERE hang_id="+req.query.hang_id+" user_id="+req.session.user_id);
+    sendQuery(res,"UPDATE tonight.hang_invites_users SET status='maybe' " +
+        "WHERE hang_id="+req.query.hang_id+" and user_id="+req.session.user_id);
 });
 
 // Set user as Not Going
 router.post('/hang/not?', function(req, res) {
-   sendQuery(res,"UPDATE tonight.hang_invites_users SET status='not' WHERE hang_id="+req.query.hang_id+" user_id="+req.session.user_id);
+    sendQuery(res,"UPDATE tonight.hang_invites_users SET status='not' " +
+        "WHERE hang_id="+req.query.hang_id+" and user_id="+req.session.user_id);
 });
 
 //temp profile query
@@ -290,8 +293,36 @@ router.get('/businessprofile?', function(req, res) {
 });
 
 //Get an individual hang
-router.get('/hang', function(req, res) {
-    sendQuery(res, QUERY_HANG);
+router.get('/hang?', function(req, res) {
+    console.log(req.query.hang_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+       }
+       
+       var searchFor = QUERY_HANG + " WHERE hang_id="+req.query.hang_id;
+       console.log(searchFor);
+
+        // SQL Query > Select Data
+        var query = client.query(searchFor);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+    });
 });
 
 //Get a list of hangs
