@@ -30,7 +30,7 @@ var USER_LOGIN =
     " WHERE email=$1";
 
 var QUERY_FRIENDS =
-    "SELECT user_id, first_name, last_name, email, birthday " +
+    "SELECT user_id, first_name, last_name, email, birthday, thumb " +
     "FROM tonight.users natural join( " +
         "select friend as user_id from tonight.befriend " +
         "where user_i=$1" +
@@ -78,7 +78,7 @@ var DELETE_HANG =
     " WHERE hang_id=$1";
 
 var QUERY_SEARCH =
-    "SELECT first_name, last_name" +
+    "SELECT first_name, last_name, thumb" +
     " FROM tonight.users WHERE CONCAT(first_name,' ',last_name)" +
     " LIKE ";
     
@@ -207,14 +207,43 @@ router.get('/feed', function name(req,res) {
 //temp GMN query
 router.post('/status', function(req, res) {
    console.log(req.body.status);
-   //sendQuery(res,"INSERT INTO tonight.hangs.status VALUES("+req.body.status+") WHERE ..."); 
+   console.log(req.session.user_id);
+   console.log("okay");
+   sendQuery(res,"UPDATE tonight.hang_invites_users SET status='"+req.body.status+"' WHERE user_id="+req.session.user_id);
+   console.log("imhere");
 });
 
 //temp profile query
-router.get('/profile', function(req, res){
-   console.log("start");
-   sendQuery(res,"SELECT first_name, last_name FROM tonight.users WHERE user_id="+req.session.user_id); 
-   console.log("success");
+router.get('/profile?', function(req, res){   
+   console.log(req.query.user);
+   var result = [];
+    
+   // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+       }
+       
+       var searchFor = QUERY_SEARCH + "'%"+req.query.user+"%'";
+       console.log(searchFor);
+
+        // SQL Query > Select Data
+        var query = client.query(searchFor);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+    });
 });
 
 //Get groups

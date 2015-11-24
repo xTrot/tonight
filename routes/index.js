@@ -72,8 +72,8 @@ router.get('/hang', function(req, res, next) {
 });
 
 /*GET MyProfile page */
-router.get('/profile', function(req, res, next) {
-  res.render('pages/myprofile', {title: "Tonight",ngapp:"profileApp"});
+router.get('/profile?', function(req, res, next) {
+  res.render('pages/myprofile', {title: "Tonight",user: req.query.user,ngapp:"profileApp"});
 });
 
 /*GET hangInfo page */

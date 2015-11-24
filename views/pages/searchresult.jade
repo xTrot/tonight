@@ -6,7 +6,7 @@ block headScripts
 
 block content
   div(class="container-fluid")
-    h3 Showing results for "#{search}""
+    h3 Showing results for "#{search}"
       div(data-role=content ng-controller="searchController as sc")
         .list-group
           a(href="#" class="list-group-item" ng-repeat="c in sc.list")
