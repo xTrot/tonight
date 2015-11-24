@@ -18,7 +18,10 @@ var uploadThumb = upload()
 
 var connectionString = require(path.join(__dirname, '../', 'config'));
 
-var NEW_HANG = "select tonight.hang($1::integer[],null::integer[],$2::integer," +
+var F_NEW_HANG = "select tonight.hang($1::integer[],null::integer[],$2::integer," +
+                    "$3::text,$4::date,$5::time,$6::text,true)";
+
+var F_QUERY_PROFILE = "select tonight.hang($1::integer[],null::integer[],$2::integer," +
                     "$3::text,$4::date,$5::time,$6::text,true)";
 
 var USER_EXISTS = 
@@ -79,7 +82,7 @@ var DELETE_HANG =
     " WHERE hang_id=$1";
 
 var QUERY_SEARCH =
-    "SELECT first_name, last_name, thumb" +
+    "SELECT user_id, first_name, last_name, thumb" +
     " FROM tonight.users WHERE CONCAT(first_name,' ',last_name)" +
     " LIKE ";
     
@@ -228,34 +231,7 @@ router.post('/status', function(req, res) {
 //temp profile query
 router.get('/profile?', function(req, res){   
    console.log(req.query.user);
-   var result = [];
-    
-   // Get a Postgres client from the connection pool
-    pg.connect(connectionString, function(err, client, done) {
-        // Handle connection errors
-        //console.log("\n\n** 1");
-        if(err) {
-            done();
-            console.log(err);
-            return res.status(500).json({ success: false, data: err});
-       }
-       
-       var searchFor = QUERY_SEARCH + "'%"+req.query.user+"%'";
-       console.log(searchFor);
-
-        // SQL Query > Select Data
-        var query = client.query(searchFor);
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            result.push(row);
-        });
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            done();
-            return res.json(result);
-        });
-    });
+   sendQuery(res,"SELECT first_name, last_name, thumb FROM tonight.users WHERE user_id="+req.query.user);
 });
 
 //Get groups
@@ -396,11 +372,11 @@ router.post('/newhang', function (req, res) {
             console.log(err);
             return res.status(500).json({success: false, data: err});
         }
-        console.log(NEW_HANG,[data.invited,data.user_id, data.name,
+        console.log(F_NEW_HANG,[data.invited,data.user_id, data.name,
             data.date,data.time,data.place]);
 
         // SQL Query > Insert Data
-        var query = client.query(NEW_HANG, [data.invited,data.user_id, data.name,
+        var query = client.query(F_NEW_HANG, [data.invited,data.user_id, data.name,
             data.date,data.time,data.place]);     
         
          query.on('row', function(row) {
