@@ -134,7 +134,7 @@ var DELETE_USER = "DELETE FROM tonight.users"+
                     " WHERE user_id = $1";
 
 var DELETE_GROUP = "DELETE FROM tonight.groups"+
-                    " WHERE groups_id = $1";
+                    " WHERE group_id=";
 
 var DELETE_POST = "DELETE FROM tonight.posts"+
                     " WHERE post_id = $1";
@@ -143,7 +143,7 @@ var DELETE_HANG = "DELETE FROM tonight.hangs"+
                     " WHERE hang_id = $1";
 
 var DELETE_BP = "DELETE FROM tonight.business_pages"+
-                    " WHERE page_id = $1";
+                    " WHERE page_id=";
 
 
 
@@ -239,6 +239,142 @@ router.get('/feed', function name(req,res) {
 router.post('/hang/going?', function(req, res) {
     sendQuery(res,"UPDATE tonight.hang_invites_users SET status='going' " +
         "WHERE hang_id="+req.query.hang_id+" and user_id="+req.session.user_id);
+});
+
+//Update group info
+router.post('/updategroup?', function(req, res) {
+   console.log(req.query.group_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query("UPDATE tonight.groups SET name='"
+        +req.body.name+"' WHERE group_id="+
+        req.query.group_id+" AND user_id="+req.session.user_id);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            res.redirect('/groups');
+        });
+
+    });
+   
+});
+
+//Delete group
+router.post('/deletegroup?', function(req, res) {
+   console.log(req.query.group_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(DELETE_GROUP+req.query.group_id);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            res.redirect('/groups');
+        });
+
+    });
+   
+});
+
+//update business info
+router.post('/updatebusiness?', function(req, res) {
+   console.log(req.query.b_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query("UPDATE tonight.business_pages SET name='"
+        +req.body.name+"' WHERE page_id="+
+        req.query.b_id+" AND user_id="+req.session.user_id);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            res.redirect('/businesses');
+        });
+
+    });
+   
+});
+
+//Delete business
+router.post('/deletebusiness?', function(req, res) {
+   console.log(req.query.b_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(DELETE_BP+req.query.b_id);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            res.redirect('/businesses');
+        });
+
+    });
+   
 });
 
 // Set user as Maybe
@@ -349,7 +485,7 @@ router.get('/hang/not?', function(req, res) {
 //temp profile query
 router.get('/profile?', function(req, res){   
    console.log(req.query.user);
-   sendQuery(res,"SELECT first_name, last_name, thumb FROM tonight.users WHERE user_id="+req.query.user);
+   sendQuery(res,"SELECT user_id, first_name, last_name, thumb FROM tonight.users WHERE user_id="+req.query.user);
 });
 
 //Get groups

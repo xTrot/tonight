@@ -1,0 +1,36 @@
+extends ../layout
+
+block headScripts
+  script(src="/angular/index.js")
+  script(src="/stylesheets/color.css")
+  script(src="/angular/updatecontrollers/businessupdateController.js")
+  
+block content 
+  .container-fluid
+    .row
+      div(class="col-md-4 col-md-offset-4" ng-controller="businessupdateController as business")
+        div(class="login-panel panel panel-default")
+          div(class="panel-heading")
+            h3(class="panel-title") Busines Information
+          div(class="panel-body")
+            form(name="form" role="form" method="post" action="query/updatebusiness?b_id=#{b_id}" novalidation)
+              fieldset
+                div(class="form-group")
+                  p Name of the Business
+                  input(class="form-control" value="{{business.profile[0].name}}" type="text" name="name")
+                div(class="form-group")
+                  p Business Website
+                  input(class="form-control" placeholder="jnijen@live.com" type="url" name="website")
+                div(class="form-group")
+                  p Cellphone
+                  input(class="form-control" placeholder="XXX-XXX-XXXX" type="text" name="cellphone")
+                div(class="form-group")
+                  p Brief Description of the Business
+                  textarea(class="form-control" type="text" name="description" rows="4")
+                div(class="form-group")
+                  p Address
+                  input(class="form-control" type="text" name="adress")
+                div(class="col-xs-*")
+                  input(class="btn btn-lg btn-info btn-block" value="Update" type="submit" href="/groups")
+            form(method="post" action="query/deletebusiness?b_id=#{b_id}")
+              input(class="btn btn-lg btn-danger btn-block" value="Delete" type="submit" href="/groups")

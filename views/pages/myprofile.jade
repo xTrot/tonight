@@ -21,10 +21,9 @@ block content
          img(class="img-rounded img-responsive" src="/images/thumbnails/{{profile.items[0].thumb}}"
          alt="Victor's Thumbnail." width="500" height="500")
          div(class="h3 text-center") {{profile.items[0].first_name}} {{profile.items[0].last_name}}
-         div(class="col-xs-12" ng-show="false")
-            input(class="btn btn-success btn-xs btn-block" type="submit" value="Send Friend Request" name="friendreq")
-         div(class="col-xs-12" ng-show="true")
-            input(class="btn btn-danger btn-xs btn-block" type="submit" value="Unfriend {{profile.items[0].first_name}}" name="unfriend")
+         div(class="col-xs-12")
+             form(method="post" action="query/relationship?user=#{user}")
+                input(class="btn btn-danger btn-xs btn-block" type="submit" value="Unfriend {{profile.items[0].user_id}}" name="visited")
          // Subsitute with tab code in feed
       div(class="well well-lg")
          ul(class="nav nav-tabs")

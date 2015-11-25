@@ -1,0 +1,26 @@
+extends ../layout
+
+block headScripts
+  script(src="/angular/index.js")
+  script(src="/stylesheets/color.css")
+  script(src="/angular/updatecontrollers/groupupdateController.js")
+  
+block content
+  .container-fluid
+    .row
+      div(class="col-md-4 col-md-offset-4" ng-controller="groupupdateController as update")
+        div(class="login-panel panel panel-default")
+          div(class="panel-heading")
+            h3(class="panel-title") Group Information
+          div(class="panel-body col-xs-*")
+            form(name="form" role="form" method="post" action="query/updategroup?group_id=#{group_id}" novalidation)
+              fieldset
+                div(class="form-group")
+                  p Group's Name
+                  input(class="form-control" placeholder="Buddies" type="text" name="name" value="{{update.profile[0].name}}")
+                div(class="form-group")
+                  p Add people to the group
+                div
+                  input(class="btn btn-lg btn-info btn-block" value="Update" type="submit" href="/groups")
+            form(method="post" action="query/deletegroup?group_id=#{group_id}")
+              input(class="btn btn-lg btn-danger btn-block" value="Delete" type="submit" href="/groups")
