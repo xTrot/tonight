@@ -73,6 +73,8 @@ router.get('/hang', function(req, res, next) {
 
 /*GET MyProfile page */
 router.get('/profile?', function(req, res, next) {
+  if(!req.query.user)
+    res.redirect('/profile?user='+req.session.user_id);
   res.render('pages/myprofile', {title: "Tonight",user: req.query.user,ngapp:"profileApp"});
 });
 

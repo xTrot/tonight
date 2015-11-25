@@ -15,11 +15,11 @@ block nav_buttons
     a(href="/profile") My Profile
 
 block headScripts
-	script(src="/angular/controllers/businessController.js")
-	script(src="/angular/directives/businessContent.js")
+  script(src="/angular/controllers/businessController.js")
+  script(src="/angular/directives/businessContent.js")
 
 block content
-	div(data-role=content ng-controller="businessController as bc")
-		.list-group
-			a(href="/businessprofile?b_id={{b.page_id}}" class="list-group-item" ng-repeat="b in bc.business")
-				business-content
+  div(data-role=content ng-controller="businessController as bc")
+    .list-group
+      a(href="/businessprofile?b_id={{b.page_id}}" class="list-group-item" ng-repeat="b in bc.business")
+        business-content
