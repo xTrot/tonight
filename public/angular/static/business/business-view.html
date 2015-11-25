@@ -1,8 +1,9 @@
 <span class="col-xs-3">
-    <img class="img-rounded img-circle" src="/images/sample/{{g.thumb}}"
+    <img class="img-rounded img-circle" src="/images/thumbnails/{{b.thumb}}"
          alt="{{b.name}}'s Thumb." style="max-height:50px"/>
 </span>
 <div class="col-xs-*">
-    <h4>{{b.name}}</h4>
-    <span style="color:dodgerblue"> members</span>
+    <h4>{{b.name}}
+        <a class="btn btn-sm btn-info pull-right" href="/updatebusiness?b_id={{b.page_id}}">Edit</a>
+            </h4>
 </div>

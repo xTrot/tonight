@@ -3,6 +3,8 @@ extends ../layout
 block headScripts
   script(src="/angular/index.js")
   script(src="/stylesheets/color.css")
+  script(src="/angular/controllers/hangfriendsController.js")
+  script(src="/angular/directives/hangfriendsContent.js")
   
 block content
   .container-fluid
@@ -11,7 +13,7 @@ block content
         div(class="login-panel panel panel-default")
           div(class="panel-heading")
             h3(class="panel-title") Group Information
-          div(class="panel-body")
+          div(class="panel-body" ng-controller="hang-friendsController as fc")
             form(name="form" role="form" method="post" action="query/groupinfo" novalidation)
               fieldset
                 div(class="form-group")
@@ -19,4 +21,7 @@ block content
                   input(class="form-control" placeholder="Buddies" type="text" name="name" required)
                 div(class="form-group")
                   p Add people to the group
+                    .list-group
+                      a(href="#" class="list-group-item" ng-repeat="f in fc.friends")
+                        hangfriends-content
                 input(class="btn btn-lg btn-info" type="submit" value="Create Group" href="/groups")

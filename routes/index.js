@@ -83,7 +83,7 @@ router.get('/hanginf?', function(req, res, next) {
 
 /*Get groupinfo page */
 router.get('/groupinf',checkAuth, function(req, res, next) {
-  res.render('pages/groupinfo', {title: "Tonight",ngapp:"registerApp"});
+  res.render('pages/groupinfo', {title: "Tonight",ngapp:"hang-friendsApp"});
 });
 
 /*Get businessinfo page */
@@ -114,6 +114,16 @@ router.get('/businessprofile?', function(req, res, next) {
 //Get group profile page
 router.get('/groupprofile?', function(req, res, next) {
   res.render('pages/groupprofile', {title: "Tonight",group_id: req.query.group_id ,ngapp:"groupprofileApp"});
+});
+
+//Get update group page
+router.get('/updategroup?', function(req, res, next) {
+  res.render('updates/groupupdate', {title: "Tonight",group_id: req.query.group_id ,ngapp:"groupupdateApp"});
+});
+
+//Get update business page
+router.get('/updatebusiness?', function(req, res, next) {
+  res.render('updates/businessupdate', {title: "Tonight",b_id: req.query.b_id ,ngapp:"businessupdateApp"});
 });
 
 module.exports = router;
