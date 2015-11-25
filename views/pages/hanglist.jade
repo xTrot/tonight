@@ -3,9 +3,9 @@ extends ../layout
 block nav_buttons
   li
     a(href="/feed") Feed
-  li
-    a(href="/hangs") Hangs
   li.active
+    a(href="/hangs") Hangs
+  li
     a(href="/friends") Friends
   li
     a(href="/profile") My Profile
@@ -17,5 +17,5 @@ block headScripts
 block content
   div(data-role=content ng-controller="hangsController as hl")
     .list-group
-      a(href="#" class="list-group-item" ng-repeat="h in hl.list")
+      a(href="/hang?hang_id={{h.hang_id}}" class="list-group-item" ng-repeat="h in hl.list")
         hangs-content

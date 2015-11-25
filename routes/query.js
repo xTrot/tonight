@@ -41,7 +41,7 @@ var QUERY_FRIENDS =
     ") as myfriends";
     
 var QUERY_HANG =
-    "SELECT hang_id, name" +
+    "SELECT *" +
     " FROM tonight.hangs";
 
 var NEW_USER =
@@ -117,7 +117,18 @@ var GROUP_LIST =
             "FROM tonight.groups "+
             "WHERE user_id = 67) "+
     "ORDER BY datetime DESC";
+    
+var GET_GOING = "select concat(first_name,' ', last_name) as name, thumb " +
+    "from tonight.users natural join tonight.hang_invites_users " +
+    "where hang_id=$1 and status='going'";
 
+var GET_MAYBE = "select concat(first_name,' ', last_name) as name, thumb " +
+    "from tonight.users natural join tonight.hang_invites_users " +
+    "where hang_id=$1 and status='maybe'";
+
+var GET_NOT = "select concat(first_name,' ', last_name) as name, thumb " +
+    "from tonight.users natural join tonight.hang_invites_users " +
+    "where hang_id=$1 and status='not'";
 
 var DELETE_USER = "DELETE FROM tonight.users"+
                     " WHERE user_id = $1";
@@ -240,6 +251,99 @@ router.post('/hang/maybe?', function(req, res) {
 router.post('/hang/not?', function(req, res) {
     sendQuery(res,"UPDATE tonight.hang_invites_users SET status='not' " +
         "WHERE hang_id="+req.query.hang_id+" and user_id="+req.session.user_id);
+});
+
+// Get users Going
+router.get('/hang/going?', function(req, res) {
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(GET_GOING,[req.query.hang_id]);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
+});
+
+// Get users Maybe
+router.get('/hang/maybe?', function(req, res) {
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(GET_MAYBE,[req.query.hang_id]);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
+});
+
+// Get users Not Going
+router.get('/hang/not?', function(req, res) {
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(GET_NOT,[req.query.hang_id]);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
 });
 
 //temp profile query

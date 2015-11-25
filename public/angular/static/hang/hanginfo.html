@@ -1,13 +1,13 @@
 <div class="container-fluid nopadding">
 	<div class="row">
 		<div class="col-xs-6">
-			<img class="img-rounded img-responsive"" src="/images/thumbnails/{{hang.info.thumb}}"
-			alt="{{hang.info.thumb}}'s Thumbnail." width="500" height="500"/>
+			<img class="img-rounded img-responsive"" src="/images/thumbnails/{{hang.info[0].thumb}}"
+			alt="{{hang.info[0].name}}'s Thumbnail." width="500" height="500"/>
 		</div>
 		<div class="col-xs-6">
-			<p class="lead text-right"> Today at {{hang.info.time_event}}
-				<br> @{{hang.info.place}} 
-				<br> By {{hang.info.host}}</br></p>
+			<p class="lead text-right"> Today at {{hang.info[0].time_event}}
+				<br> @{{hang.info[0].place}} 
+				<br> By {{hang.info[0].host}}</br></p>
 		</div>	
 	</div>
 </div>

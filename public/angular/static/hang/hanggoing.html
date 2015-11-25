@@ -1,8 +1,8 @@
 <div class="container-fluid nopadding">
 	<div class="row">
-		<div class="col-xs-3" ng-repeat="info in hang.info.going">
-			<img class="img-circle" src="/images/sample/{{info}}_thumb.jpg"
-			alt="{{info}}'s Thumbnail." style="max-height:50px"/>
+		<div class="col-xs-3" ng-repeat="user in hang.going">
+			<img class="img-circle" src="/images/thumbnails/{{user.thumb}}"
+			alt="{{user.user}}'s Thumbnail." style="max-height:50px"/>
 		</div>
 	</div>
 </div>
