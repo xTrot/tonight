@@ -8,7 +8,21 @@ block headScripts
     |   padding: 0 !important;
     |   margin: 0 !important;
     | }
-  
+
+block nav_buttons
+  li
+    a(href="/feed") Feed
+  li
+    a(href="/hangs") Hangs
+  li
+    a(href="/friends") Friends
+  li
+    a(href="/groups") Groups
+  li
+    a(href="/business") Business Pages
+  li
+    a(href="/profile") My Profile
+
 block content
   div(class="col-sm-6 col-sm-offset-3")
     .container-fluid(ng-controller="hangController as hang")

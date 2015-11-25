@@ -4,6 +4,20 @@ block headScripts
 	script(src="/angular/controllers/groupsController.js")
 	script(src="/angular/directives/groupsContent.js")
 
+block nav_buttons
+  li
+    a(href="/feed") Feed
+  li
+    a(href="/hangs") Hangs
+  li
+    a(href="/friends") Friends
+  li.active
+    a(href="/groups") Groups
+  li
+    a(href="/business") Business Pages
+  li
+    a(href="/profile") My Profile
+
 block content
 	div(data-role=content ng-controller="groupsController as gc")
 		.list-group

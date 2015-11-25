@@ -4,6 +4,20 @@ block headScripts
   script(src="/angular/controllers/searchController.js")
   script(src="/angular/directives/searchContent.js")
 
+block nav_buttons
+  li
+    a(href="/feed") Feed
+  li
+    a(href="/hangs") Hangs
+  li
+    a(href="/friends") Friends
+  li
+    a(href="/groups") Groups
+  li
+    a(href="/business") Business Pages
+  li
+    a(href="/profile") My Profile
+
 block content
   div(class="container-fluid")
     h3 Showing results for "#{search}"

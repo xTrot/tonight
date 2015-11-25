@@ -3,6 +3,20 @@ extends ../layout
 block headScripts
   script(src="/angular/index.js")
   script(src="/stylesheets/color.css")
+
+block nav_buttons
+  li
+    a(href="/feed") Feed
+  li
+    a(href="/hangs") Hangs
+  li
+    a(href="/friends") Friends
+  li
+    a(href="/groups") Groups
+  li
+    a(href="/business") Business Pages
+  li
+    a(href="/profile") My Profile
   
 block content 
   .container-fluid
