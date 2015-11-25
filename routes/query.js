@@ -21,8 +21,13 @@ var connectionString = require(path.join(__dirname, '../', 'config'));
 var F_NEW_HANG = "select tonight.hang($1::integer[],null::integer[],$2::integer," +
                     "$3::text,$4::date,$5::time,$6::text,true)";
 
-var F_QUERY_PROFILE = "select tonight.hang($1::integer[],null::integer[],$2::integer," +
-                    "$3::text,$4::date,$5::time,$6::text,true)";
+var F_QUERY_RELATION = "select tonight.get_friend_status($1,$2) as relation";
+
+var F_SEND_REQUEST = "select tonight.request($1,$2) as email";
+
+var F_ACCEPT_REQUEST = "select tonight.accept($1,$2) as email";
+
+var F_UNFRIEND = "select tonight.unfriend($1,$2)";
 
 var USER_EXISTS = 
     "SELECT user_id FROM tonight.users"+
@@ -477,6 +482,85 @@ router.get('/hang/not?', function(req, res) {
         query.on('end', function() {
             done();
             return res.json(result);
+        });
+
+    });
+});
+
+router.get('/relationship?',function (req,res) {
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(F_QUERY_RELATION,[req.session.user_id,req.query.user]);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
+});
+
+router.post('/relationship?',function (req,res) {
+    var result = [];
+    var action = '';
+    switch (req.body.status) {
+        case 'Add Friend':
+            action = F_SEND_REQUEST;
+            break;
+        case 'Request Sent':
+            return;
+            break;
+        case 'Accept':
+            action = F_ACCEPT_REQUEST;
+            break;
+        case 'Unfriend':
+            action = F_UNFRIEND;
+            break;
+        default:
+            break;
+    }
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+        
+        console.log(query+"\n",[req.session.user_id,Number(req.query.user)]);
+
+
+        // SQL Query > Select Data
+        var query = client.query(action,[req.session.user_id,Number(req.query.user)]);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            res.redirect('/profile?user='+req.query.user);
         });
 
     });

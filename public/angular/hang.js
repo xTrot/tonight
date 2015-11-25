@@ -13,13 +13,13 @@
 		$http.get('/query/hang?hang_id='+hang_id).success(function (data) {
 		  hang.info=data;
 		});
-        $http.get('/query/hang/going?hang_id='+hang_id).success(function (data) {
+    $http.get('/query/hang/going?hang_id='+hang_id).success(function (data) {
 		  hang.going=data;
 		});
-        $http.get('/query/hang/maybe?hang_id='+hang_id).success(function (data) {
+    $http.get('/query/hang/maybe?hang_id='+hang_id).success(function (data) {
 		  hang.maybe=data;
 		});
-        $http.get('/query/hang/not?hang_id='+hang_id).success(function (data) {
+    $http.get('/query/hang/not?hang_id='+hang_id).success(function (data) {
 		  hang.not=data;
 		});
         
