@@ -230,9 +230,74 @@ router.post('/hang/going?', function(req, res) {
         "WHERE hang_id="+req.query.hang_id+" and user_id="+req.session.user_id);
 });
 
+//Update group info
 router.post('/updategroup?', function(req, res) {
-   console.log(req.query.group_id)
-   sendQuery(res,"UPDATE tonight.groups SET name='"+req.body.name+"' WHERE group_id="+req.query.group_id+" AND user_id="+req.session.user_id);
+   console.log(req.query.group_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query("UPDATE tonight.groups SET name='"
+        +req.body.name+"' WHERE group_id="+
+        req.query.group_id+" AND user_id="+req.session.user_id);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            res.redirect('/groups');
+        });
+
+    });
+   
+});
+
+//update business info
+router.post('/updatebusiness?', function(req, res) {
+   console.log(req.query.b_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query("UPDATE tonight.business_pages SET name='"
+        +req.body.name+"' WHERE page_id="+
+        req.query.b_id+" AND user_id="+req.session.user_id);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            res.redirect('/businesses');
+        });
+
+    });
+   
 });
 
 // Set user as Maybe
