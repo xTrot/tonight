@@ -123,7 +123,7 @@ var DELETE_USER = "DELETE FROM tonight.users"+
                     " WHERE user_id = $1";
 
 var DELETE_GROUP = "DELETE FROM tonight.groups"+
-                    " WHERE groups_id = $1";
+                    " WHERE group_id=";
 
 var DELETE_POST = "DELETE FROM tonight.posts"+
                     " WHERE post_id = $1";
@@ -132,7 +132,7 @@ var DELETE_HANG = "DELETE FROM tonight.hangs"+
                     " WHERE hang_id = $1";
 
 var DELETE_BP = "DELETE FROM tonight.business_pages"+
-                    " WHERE page_id = $1";
+                    " WHERE page_id=";
 
 
 
@@ -265,6 +265,39 @@ router.post('/updategroup?', function(req, res) {
    
 });
 
+//Delete group
+router.post('/deletegroup?', function(req, res) {
+   console.log(req.query.group_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(DELETE_GROUP+req.query.group_id);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            res.redirect('/groups');
+        });
+
+    });
+   
+});
+
 //update business info
 router.post('/updatebusiness?', function(req, res) {
    console.log(req.query.b_id);
@@ -285,6 +318,39 @@ router.post('/updatebusiness?', function(req, res) {
         var query = client.query("UPDATE tonight.business_pages SET name='"
         +req.body.name+"' WHERE page_id="+
         req.query.b_id+" AND user_id="+req.session.user_id);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            res.redirect('/businesses');
+        });
+
+    });
+   
+});
+
+//Delete business
+router.post('/deletebusiness?', function(req, res) {
+   console.log(req.query.b_id);
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+
+        // SQL Query > Select Data
+        var query = client.query(DELETE_BP+req.query.b_id);
         // Stream results back one row at a time
         query.on('row', function(row) {
             result.push(row);

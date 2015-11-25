@@ -12,7 +12,7 @@ block content
         div(class="login-panel panel panel-default")
           div(class="panel-heading")
             h3(class="panel-title") Group Information
-          div(class="panel-body")
+          div(class="panel-body col-xs-*")
             form(name="form" role="form" method="post" action="query/updategroup?group_id=#{group_id}" novalidation)
               fieldset
                 div(class="form-group")
@@ -20,7 +20,7 @@ block content
                   input(class="form-control" placeholder="Buddies" type="text" name="name" value="{{update.profile[0].name}}")
                 div(class="form-group")
                   p Add people to the group
-                div(class="col-xs-*")
-                  input(class="btn btn-lg btn-info col-xs-6" value="Update" type="submit" href="/groups")
-                  form(method="post" action="query/deletegroup?group_id=#{group_id}")
-                    input(class="btn btn-lg btn-danger col-xs-6" value="Delete" type="submit" href="/groups")
+                div
+                  input(class="btn btn-lg btn-info btn-block" value="Update" type="submit" href="/groups")
+            form(method="post" action="query/deletegroup?group_id=#{group_id}")
+              input(class="btn btn-lg btn-danger btn-block" value="Delete" type="submit" href="/groups")
