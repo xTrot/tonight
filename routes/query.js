@@ -242,7 +242,7 @@ router.post('/hang/not?', function(req, res) {
 //temp profile query
 router.get('/profile?', function(req, res){   
    console.log(req.query.user);
-   sendQuery(res,"SELECT first_name, last_name, thumb FROM tonight.users WHERE user_id="+req.query.user);
+   sendQuery(res,"SELECT user_id, first_name, last_name, thumb FROM tonight.users WHERE user_id="+req.query.user);
 });
 
 //Get groups

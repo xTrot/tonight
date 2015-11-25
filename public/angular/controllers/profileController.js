@@ -10,7 +10,7 @@
         $http.get(searchFor).success(function (data) {
             console.log("SearchFor: " + searchFor);
             console.log("Data: " + data);
-            profile.items=data;
+            profile.items=data; //data to populate the view
         });
     }]);
 })();
