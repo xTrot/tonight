@@ -22,4 +22,18 @@
       };
     });
     
+    app.directive("podComment", function() {
+      return {
+        restrict: 'E',
+        templateUrl: "/angular/static/pods/post-comment.html"
+      };
+    });
+    
+    app.directive("commentForm", function() {
+      return {
+        restrict: 'E',
+        templateUrl: "/angular/static/pods/comment-form.html"
+      };
+    });
+    
   })();

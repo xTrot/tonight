@@ -30,4 +30,8 @@ block content
     .well.well-sm(ng-repeat="pod in feed.pods")
       pod-header
       pod-content
+      p
+        b Comments:
+      pod-comment(ng-repeat="comment in pod.comments")
+      comment-form
   

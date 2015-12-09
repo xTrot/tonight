@@ -1,6 +1,6 @@
 [
     {
-        "postId": "0",
+        "post_id": "25",
         "author": "Enddy",
         "thumb": "Enddy_thumb.jpg",
         "date": "today",
@@ -10,10 +10,18 @@
         "image": null,
         "video": null,
         "link": null,
+        "comments":[{
+            "author":"Enddy",
+            "text":"Comment testing."
+            },
+            {
+            "author":"Enddy",
+            "text":"Comment testing 2."
+            }],
         "visibility": true
     },
     {
-        "postId": "0",
+        "post_id": "0",
         "author": "Delvin",
         "thumb": "Delvin_thumb.jpg",
         "date": "today",
@@ -23,10 +31,18 @@
         "image": null,
         "video": null,
         "link": null,
+        "comments":[{
+            "author":"Victor",
+            "text":"Comment testing."
+            },
+            {
+            "author":"Victor",
+            "text":"Comment testing 2."
+            }],
         "visibility": true
     },
     {
-        "postId": "0",
+        "post_id": "0",
         "author": "Victor",
         "thumb": "Victor_thumb.jpg",
         "date": "today",
@@ -36,6 +52,14 @@
         "image": null,
         "video": null,
         "link": null,
+        "comments":[{
+            "author":"Delvin",
+            "text":"Comment testing."
+            },
+            {
+            "author":"Delvin",
+            "text":"Comment testing 2."
+            }],
         "visibility": true
     }
 ]

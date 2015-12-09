@@ -89,9 +89,9 @@ var QUERY_SEARCH =
 
 var GET_FEED =
     "select user_id, concat(first_name,' ',last_name) as author, "+
-    "datetime as date, thumb, type, text " +
+    "datetime as date, thumb, type, text, post_id " +
     "from tonight.users natural join( " +
-    "select text, type, datetime, user_id " +
+    "select text, type, datetime, user_id, post_id " +
     "from tonight.posts natural join ( " +
     "select friend as user_id from tonight.befriend " +
     "where user_i=$1 union select $1 as user_id) as nj) " +
@@ -134,6 +134,13 @@ var GET_MAYBE = "select concat(first_name,' ', last_name) as name, thumb " +
 var GET_NOT = "select concat(first_name,' ', last_name) as name, thumb " +
     "from tonight.users natural join tonight.hang_invites_users " +
     "where hang_id=$1 and status='not'";
+    
+var QUERY_COMMENT = "insert into tonight.comments (c_text,author,post_id) " +
+    "values($1,$2,$3)";
+    
+var QUERY_COMMENTS = "select concat(first_name,' ',last_name) as author, c_text from (select c_text, author as user_id " +
+  "from tonight.posts natural join tonight.comments " +
+  "where post_id=$1) as foo natural join tonight.users as withnames"
 
 var DELETE_USER = "DELETE FROM tonight.users"+
                     " WHERE user_id = $1";
@@ -225,6 +232,36 @@ router.get('/feed', function name(req,res) {
 
         // SQL Query > Select Data
         var query = client.query(GET_FEED,[req.session.user_id]);
+        console.log("Set the query.");
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            result.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(result);
+        });
+
+    });
+});
+
+router.get('/comments?', function name(req,res) {
+    var result = [];
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        //console.log("\n\n** 1");
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+        // SQL Query > Select Data
+        var query = client.query(QUERY_COMMENTS,[req.query.post_id]);
         console.log("Set the query.");
         // Stream results back one row at a time
         query.on('row', function(row) {
@@ -972,6 +1009,33 @@ router.post('/login', function(req, res) {
 
     });
 
+});
+
+router.post('/comment',function name(req,res) {
+    
+    // Grab data from http request
+    var data = {
+        c_text: req.body.text,
+        author:req.session.user_id,
+        post_id: req.body.post_id
+        };
+    console.log(data);
+    
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+
+        // SQL Query > User Authentication
+        client.query(QUERY_COMMENT, [data.c_text,data.author,data.post_id]);
+
+        res.redirect('/feed');
+    });
+    
 });
 
 router.post('/post',function name(req,res) {
